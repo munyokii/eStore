@@ -73,3 +73,11 @@ class ContactView(View):
     def get(self, request):
         """Handle GET requests and render the contact template."""
         return render(request, "contact.html")
+
+
+class SupportView(View):
+    """Class-based view to display the support.html template."""
+
+    def get(self, request):
+        """Handle GET requests and render the support template."""
+        return render(request, "support.html")
