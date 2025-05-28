@@ -97,3 +97,11 @@ class ReturnPolicyView(View):
     def get(self, request):
         """Handle GET requests and render the return-policy template."""
         return render(request, "return-policy.html")
+
+
+class TermsOfServiceView(View):
+    """Class-based view to display the terms-of-service.html template."""
+
+    def get(self, request):
+        """Handle GET requests and render the terms-of-service template."""
+        return render(request, "tos.html")
