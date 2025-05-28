@@ -11,6 +11,14 @@ class HomeView(View):
         return render(request, "home.html")
 
 
+class ProductDetailView(View):
+    """Class-based view to display the product_detail.html template."""
+
+    def get(self, request):
+        """Handle GET requests and render the product detail template."""
+        return render(request, "product-details.html")
+
+
 class BlogView(View):
     """Class-based view to display the blog.html template."""
 
