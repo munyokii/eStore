@@ -1,0 +1,534 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Blog Details - eStore Bootstrap Template</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+</head>
+
+<body class="blog-details-page">
+    <!-- Page Title -->
+    <div class="page-title light-background">
+      <div class="container d-lg-flex justify-content-between align-items-center">
+        <h1 class="mb-2 mb-lg-0">Blog Details</h1>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li class="current">Blog Details</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-lg-8">
+
+          <!-- Blog Details Section -->
+          <section id="blog-details" class="blog-details section">
+            <div class="container" data-aos="fade-up">
+
+              <article class="article">
+
+                <div class="post-img">
+                  <img src="{% static 'assets/img/blog/blog-post-7.webp' %}" alt="Featured blog image" class="img-fluid" loading="lazy">
+                </div>
+
+                <div class="article-content" data-aos="fade-up" data-aos-delay="100">
+                  <div class="meta-categories">
+                    <span class="category"><i class="bi bi-folder"></i> Technology</span>
+                    <span class="reading-time"><i class="bi bi-clock-history"></i> 8 min read</span>
+                  </div>
+
+                  <h1 class="title">The Future of Artificial Intelligence: Transforming Industries and Reshaping Society</h1>
+
+                  <div class="meta-top">
+                    <ul>
+                      <li class="d-flex align-items-center">
+                        <img src="{% static 'assets/img/person/person-m-7.webp' %}" alt="Author" class="author-img">
+                        <a href="{% url 'blog_detail' %}">Sarah Anderson</a>
+                      </li>
+                      <li class="d-flex align-items-center">
+                        <i class="bi bi-calendar-date"></i>
+                        <time datetime="2025-02-13">Feb 13, 2025</time>
+                      </li>
+                      <li class="d-flex align-items-center">
+                        <i class="bi bi-chat-dots"></i>
+                        <a href="#comments">24 Comments</a>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="content">
+                    <p class="lead">
+                      Artificial Intelligence has emerged as one of the most transformative technologies of our time, revolutionizing industries from healthcare to finance, and fundamentally changing how we live and work.
+                    </p>
+
+                    <p>
+                      In recent years, the advancement of AI technologies has accelerated at an unprecedented pace, bringing both exciting opportunities and unique challenges. This comprehensive analysis explores the current state of AI, its impact across various sectors, and what the future might hold for this revolutionary technology.
+                    </p>
+
+                    <h2>The Current State of AI Technology</h2>
+                    <p>
+                      Modern AI systems have achieved remarkable capabilities in areas such as:
+                    </p>
+                    <ul>
+                      <li>Natural Language Processing and Generation</li>
+                      <li>Computer Vision and Image Recognition</li>
+                      <li>Predictive Analytics and Decision Making</li>
+                      <li>Autonomous Systems and Robotics</li>
+                    </ul>
+
+                    <div class="content-image">
+                      <img src="{% static 'assets/img/blog/blog-hero-2.webp' %}" class="img-fluid" alt="AI Technology Implementation" loading="lazy">
+                      <figcaption>AI systems processing and analyzing complex data patterns</figcaption>
+                    </div>
+
+                    <h2>Transforming Industries</h2>
+                    <p>
+                      From healthcare diagnostics to financial forecasting, AI is revolutionizing traditional business models and creating new opportunities for innovation and efficiency. Organizations worldwide are leveraging AI to streamline operations, enhance customer experiences, and drive growth.
+                    </p>
+
+                    <blockquote>
+                      <p>
+                        "Artificial Intelligence is not just another technological advancement; it's a fundamental shift in how we approach problem-solving and decision-making across every industry and sector of society."
+                      </p>
+                      <cite>Dr. Rachel Chen, AI Research Director</cite>
+                    </blockquote>
+
+                    <h2>Ethical Considerations and Future Challenges</h2>
+                    <p>
+                      As AI continues to evolve, important questions arise about privacy, security, and the ethical implications of increasingly autonomous systems. Addressing these challenges while fostering innovation will be crucial for the sustainable development of AI technologies.
+                    </p>
+
+                    <div class="content-image-split">
+                      <div class="row g-4">
+                        <div class="col-md-6">
+                          <img src="{% static 'assets/img/blog/blog-post-square-1.webp' %}" class="img-fluid" alt="AI Ethics Discussion" loading="lazy">
+                        </div>
+                        <div class="col-md-6">
+                          <img src="{% static 'assets/img/blog/blog-post-square-2.webp' %}" class="img-fluid" alt="AI Future Prospects" loading="lazy">
+                        </div>
+                      </div>
+                    </div>
+
+                    <h2>Looking Ahead</h2>
+                    <p>
+                      The future of AI promises even more groundbreaking developments, from advanced cognitive systems to seamless human-AI collaboration. As we move forward, the key will be balancing technological progress with ethical considerations and societal impact.
+                    </p>
+                  </div>
+
+                  <div class="meta-bottom">
+                    <div class="article-tags">
+                      <i class="bi bi-tags"></i>
+                      <ul class="tags">
+                        <li><a href="#">Artificial Intelligence</a></li>
+                        <li><a href="#">Technology</a></li>
+                        <li><a href="#">Innovation</a></li>
+                        <li><a href="#">Future</a></li>
+                      </ul>
+                    </div>
+
+                    <div class="article-share">
+                      <span>Share:</span>
+                      <a href="#"><i class="bi bi-twitter"></i></a>
+                      <a href="#"><i class="bi bi-facebook"></i></a>
+                      <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                  </div>
+                </div>
+
+              </article>
+
+            </div>
+          </section><!-- /Blog Details Section -->
+
+          <!-- Blog Comments Section -->
+          <section id="blog-comments" class="blog-comments section">
+
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+              <div class="blog-comments-4">
+                <div class="comments-header">
+                  <h3 class="title">Community Feedback</h3>
+                  <div class="comments-stats">
+                    <span class="count">12</span>
+                    <span class="label">Comments</span>
+                  </div>
+                </div>
+
+                <div class="comments-container">
+                  <!-- Comment #1 -->
+                  <div class="comment-thread">
+                    <div class="comment-box">
+                      <div class="comment-wrapper">
+                        <div class="avatar-wrapper">
+                          <img src="{% static 'assets/img/person/person-f-9.webp' %}" alt="Avatar" loading="lazy">
+                          <span class="status-indicator"></span>
+                        </div>
+
+                        <div class="comment-content">
+                          <div class="comment-header">
+                            <div class="user-info">
+                              <h4>Thomas Anderson</h4>
+                              <span class="time-badge">
+                                <i class="bi bi-clock"></i>
+                                2 hours ago
+                              </span>
+                            </div>
+                            <div class="engagement">
+                              <span class="likes">
+                                <i class="bi bi-heart"></i>
+                                24
+                              </span>
+                            </div>
+                          </div>
+
+                          <div class="comment-body">
+                            <p>Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum nunc.</p>
+                          </div>
+
+                          <div class="comment-actions">
+                            <button class="action-btn like-btn" aria-label="Like comment">
+                              <i class="bi bi-heart"></i>
+                              <span>Like</span>
+                            </button>
+                            <button class="action-btn reply-btn" aria-label="Reply to comment">
+                              <i class="bi bi-chat"></i>
+                              <span>Reply</span>
+                            </button>
+                            <button class="action-btn share-btn" aria-label="Share comment">
+                              <i class="bi bi-share"></i>
+                              <span>Share</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Replies Container -->
+                    <div class="replies-container">
+                      <!-- Reply #1 -->
+                      <div class="comment-box reply">
+                        <div class="comment-wrapper">
+                          <div class="avatar-wrapper">
+                            <img src="{% static 'assets/img/person/person-m-9.webp' %}" alt="Avatar" loading="lazy">
+                            <span class="status-indicator"></span>
+                          </div>
+
+                          <div class="comment-content">
+                            <div class="comment-header">
+                              <div class="user-info">
+                                <h4>Maria Rodriguez</h4>
+                                <span class="time-badge">
+                                  <i class="bi bi-clock"></i>
+                                  1 hour ago
+                                </span>
+                              </div>
+                              <div class="engagement">
+                                <span class="likes">
+                                  <i class="bi bi-heart"></i>
+                                  8
+                                </span>
+                              </div>
+                            </div>
+
+                            <div class="comment-body">
+                              <p>Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae.</p>
+                            </div>
+
+                            <div class="comment-actions">
+                              <button class="action-btn like-btn" aria-label="Like comment">
+                                <i class="bi bi-heart"></i>
+                                <span>Like</span>
+                              </button>
+                              <button class="action-btn reply-btn" aria-label="Reply to comment">
+                                <i class="bi bi-chat"></i>
+                                <span>Reply</span>
+                              </button>
+                              <button class="action-btn share-btn" aria-label="Share comment">
+                                <i class="bi bi-share"></i>
+                                <span>Share</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Reply #2 -->
+                      <div class="comment-box reply">
+                        <div class="comment-wrapper">
+                          <div class="avatar-wrapper">
+                            <img src="{% static 'assets/img/person/person-f-9.webp' %}" alt="Avatar" loading="lazy">
+                            <span class="status-indicator"></span>
+                          </div>
+
+                          <div class="comment-content">
+                            <div class="comment-header">
+                              <div class="user-info">
+                                <h4>Alex Chen</h4>
+                                <span class="time-badge">
+                                  <i class="bi bi-clock"></i>
+                                  30 minutes ago
+                                </span>
+                              </div>
+                              <div class="engagement">
+                                <span class="likes">
+                                  <i class="bi bi-heart"></i>
+                                  5
+                                </span>
+                              </div>
+                            </div>
+
+                            <div class="comment-body">
+                              <p>Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p>
+                            </div>
+
+                            <div class="comment-actions">
+                              <button class="action-btn like-btn" aria-label="Like comment">
+                                <i class="bi bi-heart"></i>
+                                <span>Like</span>
+                              </button>
+                              <button class="action-btn reply-btn" aria-label="Reply to comment">
+                                <i class="bi bi-chat"></i>
+                                <span>Reply</span>
+                              </button>
+                              <button class="action-btn share-btn" aria-label="Share comment">
+                                <i class="bi bi-share"></i>
+                                <span>Share</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Comment #2 -->
+                  <div class="comment-thread">
+                    <div class="comment-box">
+                      <div class="comment-wrapper">
+                        <div class="avatar-wrapper">
+                          <img src="{% static 'assets/img/person/person-f-7.webp' %}" alt="Avatar" loading="lazy">
+                          <span class="status-indicator"></span>
+                        </div>
+
+                        <div class="comment-content">
+                          <div class="comment-header">
+                            <div class="user-info">
+                              <h4>Emily Watson</h4>
+                              <span class="time-badge">
+                                <i class="bi bi-clock"></i>
+                                3 hours ago
+                              </span>
+                            </div>
+                            <div class="engagement">
+                              <span class="likes">
+                                <i class="bi bi-heart"></i>
+                                15
+                              </span>
+                            </div>
+                          </div>
+
+                          <div class="comment-body">
+                            <p>Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.</p>
+                          </div>
+
+                          <div class="comment-actions">
+                            <button class="action-btn like-btn" aria-label="Like comment">
+                              <i class="bi bi-heart"></i>
+                              <span>Like</span>
+                            </button>
+                            <button class="action-btn reply-btn" aria-label="Reply to comment">
+                              <i class="bi bi-chat"></i>
+                              <span>Reply</span>
+                            </button>
+                            <button class="action-btn share-btn" aria-label="Share comment">
+                              <i class="bi bi-share"></i>
+                              <span>Share</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </section><!-- /Blog Comments Section -->
+
+          <!-- Blog Comment Form Section -->
+          <section id="blog-comment-form" class="blog-comment-form section">
+
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+              <form method="post" role="form">
+
+                <div class="form-header">
+                  <h3>Leave a Comment</h3>
+                  <p>Your email address will not be published. Required fields are marked *</p>
+                </div>
+
+                <div class="row gy-3">
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <label for="name">Full Name *</label>
+                      <input type="text" name="name" id="name" placeholder="Enter your full name" required="">
+                      <span class="error-text">Please enter your name</span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <label for="email">Email Address *</label>
+                      <input type="email" name="email" id="email" placeholder="Enter your email address" required="">
+                      <span class="error-text">Please enter a valid email address</span>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="input-group">
+                      <label for="website">Website</label>
+                      <input type="url" name="website" id="website" placeholder="Your website (optional)">
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="input-group">
+                      <label for="comment">Your Comment *</label>
+                      <textarea name="comment" id="comment" rows="5" placeholder="Write your thoughts here..." required=""></textarea>
+                      <span class="error-text">Please enter your comment</span>
+                    </div>
+                  </div>
+
+                  <div class="col-12 text-center">
+                    <button type="submit">Post Comment</button>
+                  </div>
+                </div>
+
+              </form>
+
+            </div>
+
+          </section><!-- /Blog Comment Form Section -->
+
+        </div>
+
+        <div class="col-lg-4 sidebar">
+
+          <div class="widgets-container">
+
+            <!-- Search Widget -->
+            <div class="search-widget widget-item">
+
+              <h3 class="widget-title">Search</h3>
+              <form action="">
+                <input type="text">
+                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+              </form>
+
+            </div><!--/Search Widget -->
+
+            <!-- Categories Widget -->
+            <div class="categories-widget widget-item">
+
+              <h3 class="widget-title">Categories</h3>
+              <ul class="mt-3">
+                <li><a href="#">General <span>(25)</span></a></li>
+                <li><a href="#">Lifestyle <span>(12)</span></a></li>
+                <li><a href="#">Travel <span>(5)</span></a></li>
+                <li><a href="#">Design <span>(22)</span></a></li>
+                <li><a href="#">Creative <span>(8)</span></a></li>
+                <li><a href="#">Educaion <span>(14)</span></a></li>
+              </ul>
+
+            </div><!--/Categories Widget -->
+
+            <!-- Recent Posts Widget -->
+            <div class="recent-posts-widget widget-item">
+
+              <h3 class="widget-title">Recent Posts</h3>
+
+              <div class="post-item">
+                <img src="{% static 'assets/img/blog/blog-post-square-1.webp' %}" alt="" class="flex-shrink-0">
+                <div>
+                  <h4><a href="{% url 'blog_detail' %}">Nihil blanditiis at in nihil autem</a></h4>
+                  <time datetime="2020-01-01">Jan 1, 2020</time>
+                </div>
+              </div><!-- End recent post item-->
+
+              <div class="post-item">
+                <img src="{% static 'assets/img/blog/blog-post-square-2.webp' %}" alt="" class="flex-shrink-0">
+                <div>
+                  <h4><a href="{% url 'blog_detail' %}">Quidem autem et impedit</a></h4>
+                  <time datetime="2020-01-01">Jan 1, 2020</time>
+                </div>
+              </div><!-- End recent post item-->
+
+              <div class="post-item">
+                <img src="{% static 'assets/img/blog/blog-post-square-3.webp' %}" alt="" class="flex-shrink-0">
+                <div>
+                  <h4><a href="{% url 'blog_detail' %}">Id quia et et ut maxime similique occaecati ut</a></h4>
+                  <time datetime="2020-01-01">Jan 1, 2020</time>
+                </div>
+              </div><!-- End recent post item-->
+
+              <div class="post-item">
+                <img src="{% static 'assets/img/blog/blog-post-square-4.webp' %}" alt="" class="flex-shrink-0">
+                <div>
+                  <h4><a href="{% url 'blog_detail' %}">Laborum corporis quo dara net para</a></h4>
+                  <time datetime="2020-01-01">Jan 1, 2020</time>
+                </div>
+              </div><!-- End recent post item-->
+
+              <div class="post-item">
+                <img src="{% static 'assets/img/blog/blog-post-square-5.webp' %}" alt="" class="flex-shrink-0">
+                <div>
+                  <h4><a href="{% url 'blog_detail' %}">Et dolores corrupti quae illo quod dolor</a></h4>
+                  <time datetime="2020-01-01">Jan 1, 2020</time>
+                </div>
+              </div><!-- End recent post item-->
+
+            </div><!--/Recent Posts Widget -->
+
+            <!-- Tags Widget -->
+            <div class="tags-widget widget-item">
+
+              <h3 class="widget-title">Tags</h3>
+              <ul>
+                <li><a href="#">App</a></li>
+                <li><a href="#">IT</a></li>
+                <li><a href="#">Business</a></li>
+                <li><a href="#">Mac</a></li>
+                <li><a href="#">Design</a></li>
+                <li><a href="#">Office</a></li>
+                <li><a href="#">Creative</a></li>
+                <li><a href="#">Studio</a></li>
+                <li><a href="#">Smart</a></li>
+                <li><a href="#">Tips</a></li>
+                <li><a href="#">Marketing</a></li>
+              </ul>
+
+            </div><!--/Tags Widget -->
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+</body>
+
+</html>
+{% endblock content %}
