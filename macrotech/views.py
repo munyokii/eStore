@@ -105,3 +105,11 @@ class TermsOfServiceView(View):
     def get(self, request):
         """Handle GET requests and render the terms-of-service template."""
         return render(request, "tos.html")
+
+
+class PrivacyView(View):
+    """Class-based view to display the privacy.html template."""
+
+    def get(self, request):
+        """Handle GET requests and render the privacy template."""
+        return render(request, "privacy.html")
