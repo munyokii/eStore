@@ -81,3 +81,11 @@ class SupportView(View):
     def get(self, request):
         """Handle GET requests and render the support template."""
         return render(request, "support.html")
+
+
+class ShippingInfoView(View):
+    """Class-based view to display the shipping-info.html template."""
+
+    def get(self, request):
+        """Handle GET requests and render the shipping-info template."""
+        return render(request, "shipping-info.html")
