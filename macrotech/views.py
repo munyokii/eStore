@@ -27,6 +27,14 @@ class CartView(View):
         return render(request, "cart.html")
 
 
+class CheckoutView(View):
+    """Class-based view to display the checkout.html template."""
+
+    def get(self, request):
+        """Handle GET requests and render the checkout template."""
+        return render(request, "user/checkout.html")
+
+
 class BlogView(View):
     """Class-based view to display the blog.html template."""
 
