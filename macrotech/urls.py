@@ -14,4 +14,5 @@ urlpatterns = [
   path("contact/", views.ContactView.as_view(), name="contact"),
   path("support/", views.SupportView.as_view(), name="support"),
   path("shipping-info/", views.ShippingInfoView.as_view(), name="shipping_info"),
+  path("return-policy/", views.ReturnPolicyView.as_view(), name="return_policy"),
 ]

@@ -89,3 +89,11 @@ class ShippingInfoView(View):
     def get(self, request):
         """Handle GET requests and render the shipping-info template."""
         return render(request, "shipping-info.html")
+
+
+class ReturnPolicyView(View):
+    """Class-based view to display the return-policy.html template."""
+
+    def get(self, request):
+        """Handle GET requests and render the return-policy template."""
+        return render(request, "return-policy.html")
