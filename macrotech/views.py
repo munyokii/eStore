@@ -65,3 +65,11 @@ class CategoryView(View):
     def get(self, request):
         """Handle GET requests and render the category template."""
         return render(request, "category.html")
+
+
+class ContactView(View):
+    """Class-based view to display the contact.html template."""
+
+    def get(self, request):
+        """Handle GET requests and render the contact template."""
+        return render(request, "contact.html")

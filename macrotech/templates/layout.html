@@ -103,7 +103,7 @@
         <div class="d-flex py-3 align-items-center justify-content-between">
 
           <!-- Logo -->
-          <a href="index.html" class="logo d-flex align-items-center">
+          <a href="{% url 'home' %}" class="logo d-flex align-items-center">
             <!-- Uncomment the line below if you also wish to use an image logo -->
             <!-- <img src="{% static 'assets/img/logo.webp" alt=""> -->
             <h1 class="sitename">Macrotech</h1>
@@ -768,7 +768,7 @@
 
               </li><!-- End Products Mega Menu 2 -->
 
-              <li><a href="contact.html">Contact</a></li>
+              <li><a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a></li>
 
             </ul>
           </nav>
@@ -823,7 +823,7 @@
         <div class="row gy-4">
           <div class="col-lg-3 col-md-6 col-sm-12">
             <div class="footer-widget footer-about">
-              <a href="index.html" class="logo">
+              <a href="{% url 'home' %}" class="logo">
                 <span class="sitename">Macrotech</span>
               </a>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in nibh vehicula, facilisis magna ut, consectetur lorem.</p>
@@ -848,12 +848,12 @@
             <div class="footer-widget">
               <h4>Shop</h4>
               <ul class="footer-links">
-                <li><a href="category.html">New Arrivals</a></li>
-                <li><a href="category.html">Bestsellers</a></li>
-                <li><a href="category.html">Women's Clothing</a></li>
-                <li><a href="category.html">Men's Clothing</a></li>
-                <li><a href="category.html">Accessories</a></li>
-                <li><a href="category.html">Sale</a></li>
+                <li><a href="{% url 'category' %}">New Arrivals</a></li>
+                <li><a href="{% url 'category' %}">Bestsellers</a></li>
+                <li><a href="{% url 'category' %}">Women's Clothing</a></li>
+                <li><a href="{% url 'category' %}">Men's Clothing</a></li>
+                <li><a href="{% url 'category' %}">Accessories</a></li>
+                <li><a href="{% url 'category' %}">Sale</a></li>
               </ul>
             </div>
           </div>
@@ -876,12 +876,12 @@
             <div class="footer-widget">
               <h4>Company</h4>
               <ul class="footer-links">
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="about.html">Careers</a></li>
-                <li><a href="about.html">Press</a></li>
-                <li><a href="about.html">Affiliates</a></li>
-                <li><a href="about.html">Responsibility</a></li>
-                <li><a href="about.html">Investors</a></li>
+                <li><a href="{% url 'about' %}">About Us</a></li>
+                <li><a href="{% url 'about' %}">Careers</a></li>
+                <li><a href="{% url 'about' %}">Press</a></li>
+                <li><a href="{% url 'about' %}">Affiliates</a></li>
+                <li><a href="{% url 'about' %}">Responsibility</a></li>
+                <li><a href="{% url 'about' %}">Investors</a></li>
               </ul>
             </div>
           </div>
