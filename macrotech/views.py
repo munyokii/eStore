@@ -25,3 +25,11 @@ class AboutView(View):
     def get(self, request):
         """Handle GET requests and render the about template."""
         return render(request, "about.html")
+
+
+class CategoryView(View):
+    """Class-based view to display the category.html template."""
+
+    def get(self, request):
+        """Handle GET requests and render the category template."""
+        return render(request, "category.html")

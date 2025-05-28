@@ -190,7 +190,7 @@
             <ul>
               <li><a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
                 <li><a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a></li>
-              <li><a href="category.html">Category</a></li>
+              <li><a href="{% url 'category' %}" class="{% if request.resolver_match.url_name == 'category' %}active{% endif %}">Category</a></li>
               <li><a href="product-details.html">Product Details</a></li>
               <li><a href="cart.html">Cart</a></li>
               <li><a href="checkout.html">Checkout</a></li>
