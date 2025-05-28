@@ -43,6 +43,14 @@ class BlogView(View):
         return render(request, "blog.html")
 
 
+class BlogDetailView(View):
+    """Class-based view to display the blog-details.html template."""
+
+    def get(self, request):
+        """Handle GET requests and render the blog-details template."""
+        return render(request, "blog-details.html")
+
+
 class AboutView(View):
     """Class-based view to display the about.html template."""
 
