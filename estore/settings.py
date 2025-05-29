@@ -43,13 +43,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'django_use_email_as_username.apps.DjangoUseEmailAsUsernameConfig',
-    'custom_user.apps.CustomUserConfig',
 
     "django_browser_reload",
 
     "macrotech",
 
+    'django_use_email_as_username.apps.DjangoUseEmailAsUsernameConfig',
+    'custom_user.apps.CustomUserConfig',
 ]
 
 MIDDLEWARE = [
@@ -122,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Africa/Nairobi"
 
 USE_I18N = True
 

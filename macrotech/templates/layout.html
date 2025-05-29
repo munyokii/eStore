@@ -28,6 +28,18 @@
   <!-- Main CSS File -->
   <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
 
+  <style>
+    #logout-button {
+      border-color: #ff0404;
+      background-color: transparent;
+      color: #ff0404;
+    }
+
+    #logout-button:hover {
+      background-color: #ff0404;
+      color: #ffffff;
+    }
+  </style>
 </head>
 
 <body class="index-page">
@@ -133,33 +145,41 @@
               </button>
               <div class="dropdown-menu">
                 <div class="dropdown-header">
-                  <h6>Welcome to <span class="sitename">eStore</span></h6>
+                  <h6>Welcome to <span class="sitename">Macrotech</span></h6>
                   <p class="mb-0">Access account &amp; manage orders</p>
                 </div>
-                <div class="dropdown-body">
-                  <a class="dropdown-item d-flex align-items-center" href="account.html">
-                    <i class="bi bi-person-circle me-2"></i>
-                    <span>My Profile</span>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="account.html">
-                    <i class="bi bi-bag-check me-2"></i>
-                    <span>My Orders</span>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="account.html">
-                    <i class="bi bi-heart me-2"></i>
-                    <span>My Wishlist</span>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="account.html">
-                    <i class="bi bi-gear me-2"></i>
-                    <span>Settings</span>
-                  </a>
-                </div>
-                <div class="dropdown-footer">
-                  <a href="login-register.html" class="btn btn-primary w-100 mb-2">Sign In</a>
-                  <a href="login-register.html" class="btn btn-outline-primary w-100">Register</a>
-                </div>
+
+                {% if user.is_authenticated %}
+                  <div class="dropdown-body">
+                    <a class="dropdown-item d-flex align-items-center" href="">
+                      <i class="bi bi-person-circle me-2"></i>
+                      <span>My Profile</span>
+                    </a>
+                    <a class="dropdown-item d-flex align-items-center" href="">
+                      <i class="bi bi-bag-check me-2"></i>
+                      <span>My Orders</span>
+                    </a>
+                    <a class="dropdown-item d-flex align-items-center" href="">
+                      <i class="bi bi-heart me-2"></i>
+                      <span>My Wishlist</span>
+                    </a>
+                    <a class="dropdown-item d-flex align-items-center" href="">
+                      <i class="bi bi-gear me-2"></i>
+                      <span>Settings</span>
+                    </a>
+                  </div>
+                  <div class="dropdown-footer">
+                    <a href="{% url 'logout' %}" class="btn w-100" id="logout-button">Logout</a>
+                  </div>
+                {% else %}
+                  <div class="dropdown-footer">
+                    <a href="{% url 'login_register' %}" class="btn btn-primary w-100 mb-2">Sign In</a>
+                    <a href="{% url 'login_register' %}" class="btn btn-outline-primary w-100">Register</a>
+                  </div>
+                {% endif %}
               </div>
             </div>
+
 
             <!-- Wishlist -->
             <a href="account.html" class="header-action-btn d-none d-md-block">
@@ -792,6 +812,26 @@
   </header>
 
   <main class="main">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert 
+                {% if message.tags == 'success' %}
+                    alert-success
+                {% elif message.tags == 'error' %}
+                    alert-danger
+                {% elif message.tags == 'warning' %}
+                    alert-warning
+                {% else %}
+                    alert-info
+                {% endif %}
+                alert-dismissible fade show" role="alert">
+                
+                <strong>{{ message }}</strong>
+                
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
     {% block content %}
     {% endblock content %}
   </main>
