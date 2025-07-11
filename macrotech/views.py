@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.utils.decorators import method_decorator
 
 from .utils import custom_login_required
+from .models import Product
 
 User = get_user_model()
 
@@ -13,7 +14,12 @@ class HomeView(View):
 
     def get(self, request):
         """Handle GET requests and render the home template."""
-        return render(request, "home.html")
+        products = Product.objects.all()
+
+        context = {
+            "products": products
+        }
+        return render(request, "home.html", context)
 
 
 class ProductDetailView(View):

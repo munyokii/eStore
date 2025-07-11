@@ -487,39 +487,41 @@
         <div class="row product-container isotope-container" data-aos="fade-up" data-aos-delay="200">
 
           <!-- Product Item 1 -->
-          <div class="col-md-6 col-lg-3 product-item isotope-item filter-clothing">
-            <div class="product-card">
-              <div class="product-image">
-                <span class="badge">Sale</span>
-                <img src="{% static 'assets/img/product/product-11.webp' %}" alt="Product" class="img-fluid main-img">
-                <img src="{% static 'assets/img/product/product-11-variant.webp' %}" alt="Product Hover" class="img-fluid hover-img">
-                <div class="product-overlay">
-                  <a href="cart.html" class="btn-cart"><i class="bi bi-cart-plus"></i> Add to Cart</a>
-                  <div class="product-actions">
-                    <a href="#" class="action-btn"><i class="bi bi-heart"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-eye"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-arrow-left-right"></i></a>
+          {% for product in products %}
+            <div class="col-md-6 col-lg-3 product-item isotope-item filter-clothing">
+              <div class="product-card">
+                <div class="product-image">
+                  <span class="badge">Sale</span>
+                  <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" class="img-fluid main-img">
+                  <img src="{{ product.product_more_image.url }}" alt="{{ product.product_name }}" class="img-fluid hover-img">
+                  <div class="product-overlay">
+                    <a href="{% url 'cart' %}" class="btn-cart"><i class="bi bi-cart-plus"></i> Add to Cart</a>
+                    <div class="product-actions">
+                      <a href="#" class="action-btn"><i class="bi bi-heart"></i></a>
+                      <a href="#" class="action-btn"><i class="bi bi-eye"></i></a>
+                      <a href="#" class="action-btn"><i class="bi bi-arrow-left-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="product-info">
+                  <h5 class="product-title"><a href="{% url 'product_detail' %}">{{ product.product_name }}</a></h5>
+                  <div class="product-price">
+                    <span class="current-price">Sh{{ product.current_price }}</span>
+                    <span class="old-price">Sh{{ product.old_price }}</span>
+                  </div>
+                  <div class="product-rating">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i>
+                    <span>(24)</span>
                   </div>
                 </div>
               </div>
-              <div class="product-info">
-                <h5 class="product-title"><a href="product-details.html">Lorem ipsum dolor sit amet</a></h5>
-                <div class="product-price">
-                  <span class="current-price">$89.99</span>
-                  <span class="old-price">$129.99</span>
-                </div>
-                <div class="product-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-half"></i>
-                  <span>(24)</span>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Product Item -->
-
+            </div><!-- End Product Item -->
+          {% endfor %}
+          
           <!-- Product Item 2 -->
           <div class="col-md-6 col-lg-3 product-item isotope-item filter-electronics">
             <div class="product-card">
