@@ -1,3 +1,4 @@
+
 """
 Django settings for estore project.
 
@@ -88,7 +89,7 @@ WSGI_APPLICATION = "estore.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django.db.backends.mysql",
         "NAME": env('db_name'),
         "USER": env('db_user'),
         "PASSWORD": env('db_password'),
