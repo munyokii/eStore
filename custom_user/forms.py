@@ -16,15 +16,22 @@ class UserLoginForm(forms.Form):
     def clean_email(self):
         """Validate the email field."""
         email = self.cleaned_data.get("email")
+        ex_email = User.objects.filter(email="email")
         if not email:
             raise forms.ValidationError("Email is required.")
+        elif email != ex_email:
+            raise forms.ValidationError(
+                "Seems like you don't have an account with us. Please register first.")
         return email
 
     def clean_password(self):
         """Validate the password field."""
         password = self.cleaned_data.get("password")
+        ex_password = User.objects.filter(password="password")
         if not password:
             raise forms.ValidationError("Password is required.")
+        elif password != ex_password:
+            raise forms.ValidationError("Incorrect password!")
         return password
 
     def clean(self):
