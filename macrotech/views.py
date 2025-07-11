@@ -1,7 +1,12 @@
 """Application views for the app."""
 from django.shortcuts import render
 from django.views import View
+from django.contrib.auth import get_user_model
+from django.utils.decorators import method_decorator
 
+from .utils import custom_login_required
+
+User = get_user_model()
 
 class HomeView(View):
     """Class-based view to display the home.html template."""
@@ -113,3 +118,17 @@ class PrivacyView(View):
     def get(self, request):
         """Handle GET requests and render the privacy template."""
         return render(request, "privacy.html")
+
+@method_decorator(custom_login_required(), name='dispatch')
+class AccountView(View):
+    """Class-based view to display the account.html template."""
+
+    def get(self, request):
+        """Handle GET requests and render the account template."""
+        user_detail = User.objects.get(id=request.user.id)
+
+        context = {
+            "user_detail": user_detail
+        }
+
+        return render(request, "user/account.html", context)

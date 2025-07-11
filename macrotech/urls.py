@@ -17,4 +17,5 @@ urlpatterns = [
   path("return-policy/", views.ReturnPolicyView.as_view(), name="return_policy"),
   path("terms/", views.TermsOfServiceView.as_view(), name="terms"),
   path("privacy/", views.PrivacyView.as_view(), name="privacy"),
+  path("my-account/", views.AccountView.as_view(), name="account"),
 ]
