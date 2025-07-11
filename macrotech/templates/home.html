@@ -7,22 +7,44 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Blog - eStore Bootstrap Template</title>
+  <title>Macrotech</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
 </head>
 
 <body class="index-page">
+
     <!-- Hero Section -->
     <section class="ecommerce-hero-1 hero section" id="hero">
+      
       <div class="container">
+        {% if messages %}
+          {% for message in messages %}
+              <div class="alert 
+                  {% if message.tags == 'success' %}
+                      alert-success
+                  {% elif message.tags == 'error' %}
+                      alert-danger
+                  {% elif message.tags == 'warning' %}
+                      alert-warning
+                  {% else %}
+                      alert-info
+                  {% endif %}
+                  alert-dismissible fade show" role="alert">
+                  
+                  <strong>{{ message }}</strong>
+                  
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+          {% endfor %}
+        {% endif %}
         <div class="row align-items-center">
           <div class="col-lg-6 content-col" data-aos="fade-right" data-aos-delay="100">
             <div class="content">
               <span class="promo-badge">New Collection 2025</span>
               <h1>Find the Perfect <span>Electronics</span> & Accessories for Every Need</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Vestibulum ante ipsum primis in faucibus.</p>
+              <p>Explore our wide range of electronics and accessories designed to suit your lifestyle. From smartphones and laptops to headphones and smart home devices — we've got you covered.</p>
               <div class="hero-cta">
                 <a href="#" class="btn btn-shop">Shop Now <i class="bi bi-arrow-right"></i></a>
                 <a href="#" class="btn btn-collection">View Collection</a>
