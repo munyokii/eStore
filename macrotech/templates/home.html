@@ -311,43 +311,48 @@
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="row gy-4">
-          <!-- Product 1 -->
-          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-            <div class="product-card">
-              <div class="product-image">
-                <img src="{% static 'assets/img/product/product-1.webp' %}" class="img-fluid default-image" alt="Product" loading="lazy">
-                <img src="{% static 'assets/img/product/product-1-variant.webp' %}" class="img-fluid hover-image" alt="Product hover" loading="lazy">
-                <div class="product-tags">
-                  <span class="badge bg-accent">New</span>
+          {% for best_seller in products %}
+            <!-- Product 1 -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="{{ best_seller.product_image.url }}" class="img-fluid default-image" alt="{{ best_seller.product_name }}" loading="lazy">
+                  <img src="{{ best_seller.product_more_image.url }}" class="img-fluid hover-image" alt="{{ best_seller.product_name }}" loading="lazy">
+                  <div class="product-tags">
+                    <span class="badge bg-accent">New</span>
+                  </div>
+                  <div class="product-actions">
+                    <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
+                      <i class="bi bi-heart"></i>
+                    </button>
+                    <button class="btn-quickview" type="button" aria-label="Quick view">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                  </div>
                 </div>
-                <div class="product-actions">
-                  <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
-                    <i class="bi bi-heart"></i>
-                  </button>
-                  <button class="btn-quickview" type="button" aria-label="Quick view">
-                    <i class="bi bi-eye"></i>
+                <div class="product-info">
+                  <h3 class="product-title"><a href="{% url 'product_detail' %}">{{ best_seller.product_name }}</a></h3>
+                  <div class="product-price">
+                    <span class="current-price">Sh{{ best_seller.current_price }}</span>
+                    {% if best_seller.old_price %}
+                      <span class="original-price">Sh{{ best_seller.old_price }}</span>
+                    {% endif %}
+                  </div>
+                  <div class="product-rating">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i>
+                    <span class="rating-count">(42)</span>
+                  </div>
+                  <button class="btn btn-add-to-cart">
+                    <i class="bi bi-bag-plus me-2"></i>Add to Cart
                   </button>
                 </div>
               </div>
-              <div class="product-info">
-                <h3 class="product-title"><a href="product-details.html">Lorem ipsum dolor sit amet</a></h3>
-                <div class="product-price">
-                  <span class="current-price">$89.99</span>
-                </div>
-                <div class="product-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-half"></i>
-                  <span class="rating-count">(42)</span>
-                </div>
-                <button class="btn btn-add-to-cart">
-                  <i class="bi bi-bag-plus me-2"></i>Add to Cart
-                </button>
-              </div>
-            </div>
-          </div><!-- End Product 1 -->
+            </div><!-- End Product 1 -->
+          {% endfor %}
 
           <!-- Product 2 -->
           <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="150">
