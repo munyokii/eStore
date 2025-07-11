@@ -19,13 +19,32 @@
 <section id="login-register" class="login-register section">
 
   <div class="container" data-aos="fade-up" data-aos-delay="100">
-
     <div class="row justify-content-center">
       <div class="col-lg-5">
+        {% if messages %}
+          {% for message in messages %}
+              <div class="alert 
+                  {% if message.tags == 'success' %}
+                      alert-success
+                  {% elif message.tags == 'error' %}
+                      alert-danger
+                  {% elif message.tags == 'warning' %}
+                      alert-warning
+                  {% else %}
+                      alert-info
+                  {% endif %}
+                  alert-dismissible fade show" role="alert">
+                  
+                  <strong>{{ message }}</strong>
+                  
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+          {% endfor %}
+        {% endif %}
         <div class="login-register-wraper">
 
           <!-- Tab Navigation -->
-          <ul class="nav nav-tabs nav-tabs-bordered justify-content-center mb-4" role="tablist">
+          <ul class="nav nav-tabs nav-tabs-bordered justify-content-center" role="tablist">
             <li class="nav-item" role="presentation">
               <button class="nav-link {% if active_tab == 'login' %}active{% endif %}" 
                       data-bs-toggle="tab" 
@@ -59,7 +78,7 @@
                   {{ login_form.non_field_errors }}
                 </div>
 
-                <div class="mb-4">
+                <div class="">
                   <label for="{{ login_form.email.id_for_label }}" class="form-label">Email address</label>
                   {% if login_form.email.errors %}
                     {{ login_form.email|add_class:"form-control is-invalid" }}
@@ -69,7 +88,7 @@
                   <div class="invalid-feedback d-block">{{ login_form.email.errors }}</div>
                 </div>
 
-                <div class="mb-4">
+                <div class="">
                   <label for="{{ login_form.password.id_for_label }}" class="form-label">Password</label>
                   {% if login_form.password.errors %}
                     {{ login_form.password|add_class:"form-control is-invalid" }}
@@ -79,7 +98,7 @@
                   <div class="invalid-feedback d-block">{{ login_form.password.errors }}</div>
                 </div>
 
-                <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex justify-content-between align-items-center">
                   <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="login-register-remember-me">
                     <label class="form-check-label" for="login-register-remember-me">Remember me</label>
@@ -100,7 +119,7 @@
                 {% csrf_token %}
                 <div class="invalid-feedback d-block">{{ register_form.non_field_errors }}</div>
                 <div class="row g-3">
-                  <div class="col-sm-6 mb-4">
+                  <div class="col-sm-6">
                     <label for="{{ register_form.first_name.id_for_label }}" class="form-label">First name</label>
                     {% if register_form.first_name.errors %}
                       {{ register_form.first_name|add_class:"form-control is-invalid" }}
@@ -110,7 +129,7 @@
                     <div class="invalid-feedback d-block">{{ register_form.first_name.errors }}</div>
                   </div>
 
-                  <div class="col-sm-6 mb-4">
+                  <div class="col-sm-6">
                     <label for="{{ register_form.last_name.id_for_label }}" class="form-label">Last name</label>
                     {% if register_form.last_name.errors %}
                       {{ register_form.last_name|add_class:"form-control is-invalid" }}
@@ -120,7 +139,7 @@
                     <div class="invalid-feedback d-block">{{ register_form.last_name.errors }}</div>
                   </div>
 
-                  <div class="col-12 mb-4">
+                  <div class="col-12">
                     <label for="{{ register_form.email.id_for_label }}" class="form-label">Email address</label>
                     {% if register_form.email.errors %}
                       {{ register_form.email|add_class:"form-control is-invalid" }}
@@ -130,7 +149,7 @@
                     <div class="invalid-feedback d-block">{{ register_form.email.errors }}</div>
                   </div>
 
-                  <div class="col-12 mb-4">
+                  <div class="col-6">
                     <label for="{{ register_form.password.id_for_label }}" class="form-label">Password</label>
                     {% if register_form.password.errors %}
                       {{ register_form.password|add_class:"form-control is-invalid" }}
@@ -140,7 +159,7 @@
                     <div class="invalid-feedback d-block">{{ register_form.password.errors }}</div>
                   </div>
 
-                  <div class="col-12 mb-4">
+                  <div class="col-6">
                     <label for="{{ register_form.confirm_password.id_for_label }}" class="form-label">Confirm password</label>
                     {% if register_form.confirm_password.errors %}
                       {{ register_form.confirm_password|add_class:"form-control is-invalid" }}
@@ -151,7 +170,7 @@
                   </div>
 
                   <div class="col-12">
-                    <div class="form-check">
+                    <div class="form-check d-flex">
                       <input type="checkbox" class="form-check-input" id="login-register-terms" required>
                       <label class="form-check-label" for="login-register-terms">
                         I agree to the <a href="{% url 'terms' %}">Terms of Service</a> and <a href="{% url 'privacy' %}">Privacy Policy</a>

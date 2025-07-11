@@ -9,7 +9,7 @@ class Product(models.Model):
     product_name = models.CharField(max_length=255)
     product_description = models.TextField()
     current_price = models.DecimalField(max_digits=10, decimal_places=2)
-    previous_price = models.DecimalField(max_digits=10, decimal_places=2)
+    old_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     stock = models.PositiveIntegerField()
     more_detail_description = models.TextField()
     product_specification = models.TextField()

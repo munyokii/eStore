@@ -7,22 +7,44 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Blog - eStore Bootstrap Template</title>
+  <title>Macrotech</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
 </head>
 
 <body class="index-page">
+
     <!-- Hero Section -->
     <section class="ecommerce-hero-1 hero section" id="hero">
+      
       <div class="container">
+        {% if messages %}
+          {% for message in messages %}
+              <div class="alert 
+                  {% if message.tags == 'success' %}
+                      alert-success
+                  {% elif message.tags == 'error' %}
+                      alert-danger
+                  {% elif message.tags == 'warning' %}
+                      alert-warning
+                  {% else %}
+                      alert-info
+                  {% endif %}
+                  alert-dismissible fade show" role="alert">
+                  
+                  <strong>{{ message }}</strong>
+                  
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+          {% endfor %}
+        {% endif %}
         <div class="row align-items-center">
           <div class="col-lg-6 content-col" data-aos="fade-right" data-aos-delay="100">
             <div class="content">
               <span class="promo-badge">New Collection 2025</span>
               <h1>Find the Perfect <span>Electronics</span> & Accessories for Every Need</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Vestibulum ante ipsum primis in faucibus.</p>
+              <p>Explore our wide range of electronics and accessories designed to suit your lifestyle. From smartphones and laptops to headphones and smart home devices — we've got you covered.</p>
               <div class="hero-cta">
                 <a href="#" class="btn btn-shop">Shop Now <i class="bi bi-arrow-right"></i></a>
                 <a href="#" class="btn btn-collection">View Collection</a>
@@ -289,43 +311,48 @@
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="row gy-4">
-          <!-- Product 1 -->
-          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-            <div class="product-card">
-              <div class="product-image">
-                <img src="{% static 'assets/img/product/product-1.webp' %}" class="img-fluid default-image" alt="Product" loading="lazy">
-                <img src="{% static 'assets/img/product/product-1-variant.webp' %}" class="img-fluid hover-image" alt="Product hover" loading="lazy">
-                <div class="product-tags">
-                  <span class="badge bg-accent">New</span>
+          {% for best_seller in products %}
+            <!-- Product 1 -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="{{ best_seller.product_image.url }}" class="img-fluid default-image" alt="{{ best_seller.product_name }}" loading="lazy">
+                  <img src="{{ best_seller.product_more_image.url }}" class="img-fluid hover-image" alt="{{ best_seller.product_name }}" loading="lazy">
+                  <div class="product-tags">
+                    <span class="badge bg-accent">New</span>
+                  </div>
+                  <div class="product-actions">
+                    <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
+                      <i class="bi bi-heart"></i>
+                    </button>
+                    <button class="btn-quickview" type="button" aria-label="Quick view">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                  </div>
                 </div>
-                <div class="product-actions">
-                  <button class="btn-wishlist" type="button" aria-label="Add to wishlist">
-                    <i class="bi bi-heart"></i>
-                  </button>
-                  <button class="btn-quickview" type="button" aria-label="Quick view">
-                    <i class="bi bi-eye"></i>
+                <div class="product-info">
+                  <h3 class="product-title"><a href="{% url 'product_detail' %}">{{ best_seller.product_name }}</a></h3>
+                  <div class="product-price">
+                    <span class="current-price">Sh{{ best_seller.current_price }}</span>
+                    {% if best_seller.old_price %}
+                      <span class="original-price">Sh{{ best_seller.old_price }}</span>
+                    {% endif %}
+                  </div>
+                  <div class="product-rating">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i>
+                    <span class="rating-count">(42)</span>
+                  </div>
+                  <button class="btn btn-add-to-cart">
+                    <i class="bi bi-bag-plus me-2"></i>Add to Cart
                   </button>
                 </div>
               </div>
-              <div class="product-info">
-                <h3 class="product-title"><a href="product-details.html">Lorem ipsum dolor sit amet</a></h3>
-                <div class="product-price">
-                  <span class="current-price">$89.99</span>
-                </div>
-                <div class="product-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-half"></i>
-                  <span class="rating-count">(42)</span>
-                </div>
-                <button class="btn btn-add-to-cart">
-                  <i class="bi bi-bag-plus me-2"></i>Add to Cart
-                </button>
-              </div>
-            </div>
-          </div><!-- End Product 1 -->
+            </div><!-- End Product 1 -->
+          {% endfor %}
 
           <!-- Product 2 -->
           <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="150">
@@ -465,39 +492,41 @@
         <div class="row product-container isotope-container" data-aos="fade-up" data-aos-delay="200">
 
           <!-- Product Item 1 -->
-          <div class="col-md-6 col-lg-3 product-item isotope-item filter-clothing">
-            <div class="product-card">
-              <div class="product-image">
-                <span class="badge">Sale</span>
-                <img src="{% static 'assets/img/product/product-11.webp' %}" alt="Product" class="img-fluid main-img">
-                <img src="{% static 'assets/img/product/product-11-variant.webp' %}" alt="Product Hover" class="img-fluid hover-img">
-                <div class="product-overlay">
-                  <a href="cart.html" class="btn-cart"><i class="bi bi-cart-plus"></i> Add to Cart</a>
-                  <div class="product-actions">
-                    <a href="#" class="action-btn"><i class="bi bi-heart"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-eye"></i></a>
-                    <a href="#" class="action-btn"><i class="bi bi-arrow-left-right"></i></a>
+          {% for product in products %}
+            <div class="col-md-6 col-lg-3 product-item isotope-item filter-clothing">
+              <div class="product-card">
+                <div class="product-image">
+                  <span class="badge">Sale</span>
+                  <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" class="img-fluid main-img">
+                  <img src="{{ product.product_more_image.url }}" alt="{{ product.product_name }}" class="img-fluid hover-img">
+                  <div class="product-overlay">
+                    <a href="{% url 'cart' %}" class="btn-cart"><i class="bi bi-cart-plus"></i> Add to Cart</a>
+                    <div class="product-actions">
+                      <a href="#" class="action-btn"><i class="bi bi-heart"></i></a>
+                      <a href="#" class="action-btn"><i class="bi bi-eye"></i></a>
+                      <a href="#" class="action-btn"><i class="bi bi-arrow-left-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="product-info">
+                  <h5 class="product-title"><a href="{% url 'product_detail' %}">{{ product.product_name }}</a></h5>
+                  <div class="product-price">
+                    <span class="current-price">Sh{{ product.current_price }}</span>
+                    <span class="old-price">Sh{{ product.old_price }}</span>
+                  </div>
+                  <div class="product-rating">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i>
+                    <span>(24)</span>
                   </div>
                 </div>
               </div>
-              <div class="product-info">
-                <h5 class="product-title"><a href="product-details.html">Lorem ipsum dolor sit amet</a></h5>
-                <div class="product-price">
-                  <span class="current-price">$89.99</span>
-                  <span class="old-price">$129.99</span>
-                </div>
-                <div class="product-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-half"></i>
-                  <span>(24)</span>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Product Item -->
-
+            </div><!-- End Product Item -->
+          {% endfor %}
+          
           <!-- Product Item 2 -->
           <div class="col-md-6 col-lg-3 product-item isotope-item filter-electronics">
             <div class="product-card">

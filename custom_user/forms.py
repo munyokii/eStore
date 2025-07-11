@@ -33,9 +33,16 @@ class UserLoginForm(forms.Form):
         password = cleaned_data.get("password")
 
         if email and password:
+            try:
+                user = User.objects.get(email=email)
+            except Exception as exc:
+                raise forms.ValidationError(
+                    "Incorrect email or user does not exist.") from exc
+
             user = authenticate(email=email, password=password)
             if not user:
-                raise forms.ValidationError("Invalid email or password.")
+                raise forms.ValidationError("Incorrect password!")
+
             self.user = user
 
         return cleaned_data
@@ -43,8 +50,9 @@ class UserLoginForm(forms.Form):
 
 class UserRegisterForm(forms.ModelForm):
     """Form for user registration."""
-    password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}))
 
     class Meta:
         """Meta class for UserRegisterForm."""
@@ -53,7 +61,7 @@ class UserRegisterForm(forms.ModelForm):
         widgets = {
             'first_name': forms.TextInput(attrs={'placeholder': 'First name'}),
             'last_name': forms.TextInput(attrs={'placeholder': 'Last name'}),
-            'email': forms.EmailInput(attrs={'placeholder': 'Email'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'Email Address'}),
         }
 
     def clean_first_name(self):
