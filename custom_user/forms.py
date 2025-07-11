@@ -50,8 +50,9 @@ class UserLoginForm(forms.Form):
 
 class UserRegisterForm(forms.ModelForm):
     """Form for user registration."""
-    password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}))
 
     class Meta:
         """Meta class for UserRegisterForm."""
@@ -60,7 +61,7 @@ class UserRegisterForm(forms.ModelForm):
         widgets = {
             'first_name': forms.TextInput(attrs={'placeholder': 'First name'}),
             'last_name': forms.TextInput(attrs={'placeholder': 'Last name'}),
-            'email': forms.EmailInput(attrs={'placeholder': 'Email'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'Email Address'}),
         }
 
     def clean_first_name(self):
