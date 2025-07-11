@@ -7,9 +7,9 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Product Details - eStore Bootstrap Template</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+  <title>{{ product.product_name }}</title>
+  <meta name="description" content="{{ product.product_description }}">
+  <meta name="keywords" content="{{ product.product_keywords }}">
 
 </head>
 
@@ -38,7 +38,7 @@
             <div class="product-images">
               <div class="main-image-container mb-3">
                 <div class="image-zoom-container">
-                  <img src="{% static 'assets/img/product/product-details-1.webp' %}" alt="Product Image" class="img-fluid main-image drift-zoom" id="main-product-image" data-zoom="{% static 'assets/img/product/product-details-1.webp">
+                  <img src="{{ product.product_image.url }}" alt="Product Image" class="img-fluid main-image drift-zoom" id="main-product-image" data-zoom="{{ product.product_image.url }}">
                 </div>
               </div>
 
@@ -65,11 +65,11 @@
                     }
                   </script>
                   <div class="swiper-wrapper">
-                    <div class="swiper-slide thumbnail-item active" data-image="{% static 'assets/img/product/product-details-1.webp' %}">
-                      <img src="{% static 'assets/img/product/product-details-1.webp' %}" alt="Product Thumbnail" class="img-fluid">
+                    <div class="swiper-slide thumbnail-item active" data-image="{{ product.product_image.url }}">
+                      <img src="{{ product.product_image.url }}" alt="Product Thumbnail" class="img-fluid">
                     </div>
-                    <div class="swiper-slide thumbnail-item" data-image="{% static 'assets/img/product/product-details-2.webp' %}">
-                      <img src="{% static 'assets/img/product/product-details-2.webp' %}" alt="Product Thumbnail" class="img-fluid">
+                    <div class="swiper-slide thumbnail-item" data-image="{{ product.product_more_image.url }}">
+                      <img src="{{ product.product_more_image.url }}" alt="Product Thumbnail" class="img-fluid">
                     </div>
                     <div class="swiper-slide thumbnail-item" data-image="{% static 'assets/img/product/product-details-3.webp' %}">
                       <img src="{% static 'assets/img/product/product-details-3.webp' %}" alt="Product Thumbnail" class="img-fluid">
@@ -103,22 +103,24 @@
                 </div>
               </div>
 
-              <h1 class="product-title">Lorem Ipsum Wireless Noise Cancelling Headphones</h1>
+              <h1 class="product-title">{{ product.product_name }}</h1>
 
               <div class="product-price-container mb-4">
-                <span class="current-price">$249.99</span>
-                <span class="original-price">$299.99</span>
-                <span class="discount-badge">-17%</span>
+                <span class="current-price">Sh{{ product.current_price }}</span>
+                <span class="original-price">Sh{{ product.old_price }}</span>
+                <span class="discount-badge">-23%</span>
               </div>
 
               <div class="product-short-description mb-4">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at lacus congue, suscipit elit nec, tincidunt orci. Phasellus egestas nisi vitae lectus imperdiet venenatis.</p>
+                <p>
+                  {{ product.product_description }}
+                </p>
               </div>
 
               <div class="product-availability mb-4">
                 <i class="bi bi-check-circle-fill text-success"></i>
                 <span>In Stock</span>
-                <span class="stock-count">(24 items left)</span>
+                <span class="stock-count">({{ product.stock }} items left)</span>
               </div>
 
               <!-- Color Options -->
@@ -174,16 +176,18 @@
                 <button class="btn btn-outline-primary buy-now-btn">
                   <i class="bi bi-lightning-fill"></i> Buy Now
                 </button>
-                <button class="btn btn-outline-secondary wishlist-btn">
-                  <i class="bi bi-heart"></i>
-                </button>
+                {% if user.is_authenticated %}
+                  <button class="btn btn-outline-secondary wishlist-btn">
+                    <i class="bi bi-heart"></i>
+                  </button>
+                {% endif %}
               </div>
 
               <!-- Additional Info -->
               <div class="additional-info mt-4">
                 <div class="info-item">
                   <i class="bi bi-truck"></i>
-                  <span>Free shipping on orders over $50</span>
+                  <span>Free shipping on orders over Sh5000</span>
                 </div>
                 <div class="info-item">
                   <i class="bi bi-arrow-repeat"></i>
@@ -218,25 +222,7 @@
                 <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
                   <div class="product-description">
                     <h4>Product Overview</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at lacus congue, suscipit elit nec, tincidunt orci. Phasellus egestas nisi vitae lectus imperdiet venenatis. Suspendisse vulputate quam diam, et consectetur augue condimentum in. Aenean dapibus urna eget nisi pharetra, in iaculis nulla blandit. Praesent at consectetur sem, sed sollicitudin nibh. Ut interdum risus ac nulla placerat aliquet.</p>
-
-                    <h4>Key Features</h4>
-                    <ul>
-                      <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-                      <li>Vestibulum at lacus congue, suscipit elit nec, tincidunt orci</li>
-                      <li>Phasellus egestas nisi vitae lectus imperdiet venenatis</li>
-                      <li>Suspendisse vulputate quam diam, et consectetur augue condimentum in</li>
-                      <li>Aenean dapibus urna eget nisi pharetra, in iaculis nulla blandit</li>
-                    </ul>
-
-                    <h4>What's in the Box</h4>
-                    <ul>
-                      <li>Lorem Ipsum Wireless Headphones</li>
-                      <li>Carrying Case</li>
-                      <li>USB-C Charging Cable</li>
-                      <li>3.5mm Audio Cable</li>
-                      <li>User Manual</li>
-                    </ul>
+                    <p>{{ product.more_detail_description }}</p>
                   </div>
                 </div>
 
@@ -245,56 +231,12 @@
                   <div class="product-specifications">
                     <div class="specs-group">
                       <h4>Technical Specifications</h4>
-                      <div class="specs-table">
-                        <div class="specs-row">
-                          <div class="specs-label">Connectivity</div>
-                          <div class="specs-value">Bluetooth 5.0, 3.5mm jack</div>
-                        </div>
-                        <div class="specs-row">
-                          <div class="specs-label">Battery Life</div>
-                          <div class="specs-value">Up to 30 hours</div>
-                        </div>
-                        <div class="specs-row">
-                          <div class="specs-label">Charging Time</div>
-                          <div class="specs-value">3 hours</div>
-                        </div>
-                        <div class="specs-row">
-                          <div class="specs-label">Driver Size</div>
-                          <div class="specs-value">40mm</div>
-                        </div>
-                        <div class="specs-row">
-                          <div class="specs-label">Frequency Response</div>
-                          <div class="specs-value">20Hz - 20kHz</div>
-                        </div>
-                        <div class="specs-row">
-                          <div class="specs-label">Impedance</div>
-                          <div class="specs-value">32 Ohm</div>
-                        </div>
-                        <div class="specs-row">
-                          <div class="specs-label">Weight</div>
-                          <div class="specs-value">250g</div>
-                        </div>
-                      </div>
                     </div>
 
                     <div class="specs-group">
-                      <h4>Features</h4>
                       <div class="specs-table">
                         <div class="specs-row">
-                          <div class="specs-label">Noise Cancellation</div>
-                          <div class="specs-value">Active Noise Cancellation (ANC)</div>
-                        </div>
-                        <div class="specs-row">
-                          <div class="specs-label">Controls</div>
-                          <div class="specs-value">Touch controls, Voice assistant</div>
-                        </div>
-                        <div class="specs-row">
-                          <div class="specs-label">Microphone</div>
-                          <div class="specs-value">Dual beamforming microphones</div>
-                        </div>
-                        <div class="specs-row">
-                          <div class="specs-label">Water Resistance</div>
-                          <div class="specs-value">IPX4 (splash resistant)</div>
+                          <p>{{ product.product_specification }}</p>
                         </div>
                       </div>
                     </div>

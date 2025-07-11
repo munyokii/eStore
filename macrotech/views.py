@@ -25,9 +25,13 @@ class HomeView(View):
 class ProductDetailView(View):
     """Class-based view to display the product_detail.html template."""
 
-    def get(self, request):
+    def get(self, request, product_id):
         """Handle GET requests and render the product detail template."""
-        return render(request, "product-details.html")
+        product = Product.objects.get(id=product_id)
+        context = {
+            "product": product
+        }
+        return render(request, "product-details.html", context)
 
 
 class CartView(View):
