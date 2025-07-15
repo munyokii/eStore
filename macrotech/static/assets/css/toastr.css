@@ -1,0 +1,17 @@
+.toast {
+  font-size: 16px;
+  color: #fff;
+  background-color: #444;
+}
+
+.toast-success {
+  background-color: #28a745;
+}
+
+.toast-warning {
+  background-color: #ffc107;
+}
+
+.toast-error {
+  background-color: #dc3545;
+}

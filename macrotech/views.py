@@ -1,11 +1,15 @@
 """Application views for the app."""
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
 from django.contrib.auth import get_user_model
 from django.utils.decorators import method_decorator
 
+from macrotech.forms import ContactMessageForm
+
 from .utils import custom_login_required
 from .models import Product
+from .email import EmailContactNotification
 
 User = get_user_model()
 
@@ -83,11 +87,48 @@ class CategoryView(View):
 
 
 class ContactView(View):
-    """Class-based view to display the contact.html template."""
+    """Class-based view to handle contact form rendering and submission."""
 
     def get(self, request):
-        """Handle GET requests and render the contact template."""
-        return render(request, "contact.html")
+        """Render the contact form template."""
+        form = ContactMessageForm()
+        return render(request, "contact.html", {'form': form})
+
+    def post(self, request):
+        """Handle POST request to submit contact form data."""
+        form = ContactMessageForm(request.POST)
+
+        if form.is_valid():
+            try:
+                contact = form.save()
+
+                context = {
+                    'name': contact.name,
+                    'email': contact.email,
+                    'subject': contact.subject,
+                    'message': contact.message,
+                }
+
+                notification = EmailContactNotification(context)
+                email_sent = notification.send()
+
+                if email_sent:
+                    return JsonResponse({
+                        'success': 'We have received your message 🤝. We will contact you soon. 🤖'
+                    })
+                else:
+                    return JsonResponse({
+                        'warning': 'We have received your message 🤝. But there was an issue sending confirmation email 🤖'
+                    })
+
+            except ValueError as e:
+                print(f'Error: {e}')
+                return JsonResponse({
+                    'error': 'Sorry, there was an issue sending your message. Please try again!'
+                }, status=500)
+
+        else:
+            return JsonResponse({'error': form.errors}, status=400)
 
 
 class SupportView(View):

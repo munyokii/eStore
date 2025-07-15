@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 import environ
+import cloudinary
 
 env = environ.Env(
   DEBUG=(bool, False)
@@ -144,3 +145,27 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'custom_user.User'
+
+# Email config
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'jobmunyoki59@gmail.com'
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASS')
+ADMIN_EMAIL = 'munyoki912@gmail.com'
+EMAIL_SENDER = 'jobmunyoki59@gmail.com'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+# cloudinary config
+CLOUDINARY_CONFIG = {
+    'cloud_name': 'dhzhrymxv',
+    'api_secret': env('CLOUDINARY_API_SECRET'),
+    'api_key': env('CLOUDINARY_API_KEY'),
+    'secure': True
+}
+
+cloudinary.config(**CLOUDINARY_CONFIG)
+PUBLIC_ID = 'logo_ppwe8v'
