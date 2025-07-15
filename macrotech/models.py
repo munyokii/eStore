@@ -1,5 +1,6 @@
 """Application models for the Macrotech app."""
 from django.db import models
+from django_ckeditor_5.fields import CKEditor5Field
 
 # Create your models here.
 class Product(models.Model):
@@ -11,8 +12,8 @@ class Product(models.Model):
     current_price = models.DecimalField(max_digits=10, decimal_places=2)
     old_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     stock = models.PositiveIntegerField()
-    more_detail_description = models.TextField()
-    product_specification = models.TextField()
+    more_detail_description = CKEditor5Field()
+    product_specification = CKEditor5Field()
 
     objects = models.Manager()
 

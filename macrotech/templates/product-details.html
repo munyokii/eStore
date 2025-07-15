@@ -222,7 +222,7 @@
                 <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
                   <div class="product-description">
                     <h4>Product Overview</h4>
-                    <p>{{ product.more_detail_description }}</p>
+                    <p>{{ product.more_detail_description|safe }}</p>
                   </div>
                 </div>
 
@@ -236,7 +236,7 @@
                     <div class="specs-group">
                       <div class="specs-table">
                         <div class="specs-row">
-                          <p>{{ product.product_specification }}</p>
+                          <p>{{ product.product_specification|safe }}</p>
                         </div>
                       </div>
                     </div>
