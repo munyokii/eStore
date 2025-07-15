@@ -32,3 +32,19 @@ class Review(models.Model):
 
     def __str__(self):
         return f"{self.product} - {self.review_title}"
+
+
+class ContactMessage(models.Model):
+    """Contact Messages Model"""
+    name = models.CharField(max_length=30, blank=False)
+    email = models.EmailField(blank=False)
+    subject = models.CharField(max_length=255,blank=True)
+    message = models.CharField(max_length=1000, blank=False)
+    send_at = models.DateTimeField(auto_now_add=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        if self.name is None:
+            return "No name provided (None)"
+        return self.name
