@@ -4,17 +4,38 @@ from django_ckeditor_5.fields import CKEditor5Field
 
 
 # Create your models here.
+class Category(models.Model):
+    """Model representing a product category."""
+    CATEGORY_CHOICES = [
+        ("Accessories", "Accessories"),
+        ("Laptops", "Laptops"),
+        ("Desktops", "Desktops"),
+        ("Smartphones", "Smartphones"),
+    ]
+    category_image = models.ImageField(upload_to='categories/', blank=True, null=True)
+    category_name = models.CharField(max_length=255, choices=CATEGORY_CHOICES)
+    category_description = models.TextField(blank=True, null=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return str(self.category_name)
+
+
 class Product(models.Model):
     """Model representing a product."""
     product_image = models.ImageField(upload_to='products/')
     product_more_image = models.ImageField(upload_to='products/more/', blank=True, null=True)
     product_name = models.CharField(max_length=255)
     product_description = models.TextField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
     current_price = models.DecimalField(max_digits=10, decimal_places=2)
     old_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     stock = models.PositiveIntegerField()
     more_detail_description = CKEditor5Field()
     product_specification = CKEditor5Field()
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
 
     objects = models.Manager()
 
@@ -35,6 +56,7 @@ class Product(models.Model):
 
     def __str__(self):
         return str(self.product_name)
+
 
 class Review(models.Model):
     """Model representing a product review."""
