@@ -18,6 +18,11 @@ class Category(models.Model):
 
     objects = models.Manager()
 
+    class Meta:
+        """Meta class for Category model."""
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+
     def __str__(self):
         return str(self.category_name)
 
