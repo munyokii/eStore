@@ -2,6 +2,7 @@
 from django.db import models
 from django_ckeditor_5.fields import CKEditor5Field
 
+
 # Create your models here.
 class Product(models.Model):
     """Model representing a product."""
@@ -16,6 +17,21 @@ class Product(models.Model):
     product_specification = CKEditor5Field()
 
     objects = models.Manager()
+
+    def has_discount(self):
+        """Check if the product has a discount."""
+        return self.old_price and self.old_price > self.current_price
+
+    def discount(self):
+        """Calculate product discount percentage if old price exists."""
+        if self.has_discount():
+            try:
+                product_discount = ((self.old_price - self.current_price) / self.old_price) * 100
+                return int(product_discount)
+            except (ZeroDivisionError, TypeError):
+                return 0
+        return 0
+
 
     def __str__(self):
         return str(self.product_name)

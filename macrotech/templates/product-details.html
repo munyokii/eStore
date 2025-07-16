@@ -108,7 +108,9 @@
               <div class="product-price-container mb-4">
                 <span class="current-price">Sh{{ product.current_price }}</span>
                 <span class="original-price">Sh{{ product.old_price }}</span>
-                <span class="discount-badge">-23%</span>
+                {% if product.has_discount %}
+                  <span class="discount-badge">-{{ product.discount }}%</span>
+                {% endif %}
               </div>
 
               <div class="product-short-description mb-4">
