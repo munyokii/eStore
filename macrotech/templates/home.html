@@ -195,100 +195,20 @@
 
           <div class="swiper-wrapper">
             <!-- Category Card 1 -->
-            <div class="swiper-slide">
-              <div class="category-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="category-image">
-                  <img src="{% static 'assets/img/product/product-1.webp' %}" alt="Category" class="img-fluid">
+            {% for category in categories%}
+              <div class="swiper-slide">
+                <div class="category-card" data-aos="fade-up" data-aos-delay="100">
+                  <div class="category-image">
+                    <img src="{{ category.category_image.url }}" alt="Category" class="img-fluid">
+                  </div>
+                  <h3 class="category-title">{{ category.category_name }}</h3>
+                  <p class="category-count">{{ category.product_count }} products</p>
+                  <a href="" class="stretched-link"></a>
                 </div>
-                <h3 class="category-title">Vestibulum ante</h3>
-                <p class="category-count">4 Products</p>
-                <a href="ctaegory.html" class="stretched-link"></a>
               </div>
-            </div>
+            {% endfor %}
 
-            <!-- Category Card 2 -->
-            <div class="swiper-slide">
-              <div class="category-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="category-image">
-                  <img src="{% static 'assets/img/product/product-6.webp' %}" alt="Category" class="img-fluid">
-                </div>
-                <h3 class="category-title">Maecenas nec</h3>
-                <p class="category-count">8 Products</p>
-                <a href="ctaegory.html" class="stretched-link"></a>
-              </div>
-            </div>
-
-            <!-- Category Card 3 -->
-            <div class="swiper-slide">
-              <div class="category-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="category-image">
-                  <img src="{% static 'assets/img/product/product-9.webp' %}" alt="Category" class="img-fluid">
-                </div>
-                <h3 class="category-title">Aenean tellus</h3>
-                <p class="category-count">4 Products</p>
-                <a href="ctaegory.html" class="stretched-link"></a>
-              </div>
-            </div>
-
-            <!-- Category Card 4 -->
-            <div class="swiper-slide">
-              <div class="category-card" data-aos="fade-up" data-aos-delay="400">
-                <div class="category-image">
-                  <img src="{% static 'assets/img/product/product-f-1.webp' %}" alt="Category" class="img-fluid">
-                </div>
-                <h3 class="category-title">Donec quam</h3>
-                <p class="category-count">12 Products</p>
-                <a href="ctaegory.html" class="stretched-link"></a>
-              </div>
-            </div>
-
-            <!-- Category Card 5 -->
-            <div class="swiper-slide">
-              <div class="category-card" data-aos="fade-up" data-aos-delay="500">
-                <div class="category-image">
-                  <img src="{% static 'assets/img/product/product-10.webp' %}" alt="Category" class="img-fluid">
-                </div>
-                <h3 class="category-title">Phasellus leo</h3>
-                <p class="category-count">4 Products</p>
-                <a href="ctaegory.html" class="stretched-link"></a>
-              </div>
-            </div>
-
-            <!-- Category Card 6 -->
-            <div class="swiper-slide">
-              <div class="category-card" data-aos="fade-up" data-aos-delay="600">
-                <div class="category-image">
-                  <img src="{% static 'assets/img/product/product-m-1.webp' %}" alt="Category" class="img-fluid">
-                </div>
-                <h3 class="category-title">Quisque rutrum</h3>
-                <p class="category-count">2 Products</p>
-                <a href="ctaegory.html" class="stretched-link"></a>
-              </div>
-            </div>
-
-            <!-- Category Card 7 -->
-            <div class="swiper-slide">
-              <div class="category-card" data-aos="fade-up" data-aos-delay="700">
-                <div class="category-image">
-                  <img src="{% static 'assets/img/product/product-10.webp' %}" alt="Category" class="img-fluid">
-                </div>
-                <h3 class="category-title">Etiam ultricies</h3>
-                <p class="category-count">4 Products</p>
-                <a href="ctaegory.html" class="stretched-link"></a>
-              </div>
-            </div>
-
-            <!-- Category Card 8 -->
-            <div class="swiper-slide">
-              <div class="category-card" data-aos="fade-up" data-aos-delay="800">
-                <div class="category-image">
-                  <img src="{% static 'assets/img/product/product-2.webp' %}" alt="Category" class="img-fluid">
-                </div>
-                <h3 class="category-title">Fusce fermentum</h3>
-                <p class="category-count">4 Products</p>
-                <a href="ctaegory.html" class="stretched-link"></a>
-              </div>
-            </div>
+            
           </div>
 
           <div class="swiper-button-next"></div>
