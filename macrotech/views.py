@@ -4,11 +4,12 @@ from django.shortcuts import render
 from django.views import View
 from django.contrib.auth import get_user_model
 from django.utils.decorators import method_decorator
+from django.db.models import Count
 
 from macrotech.forms import ContactMessageForm
 
 from .utils import custom_login_required
-from .models import Product
+from .models import Category, Product
 from .email import EmailContactNotification
 
 User = get_user_model()
@@ -18,10 +19,12 @@ class HomeView(View):
 
     def get(self, request):
         """Handle GET requests and render the home template."""
-        products = Product.objects.all()
+        products = Product.objects.all().order_by("-uploaded_at")
+        categories = Category.objects.annotate(product_count=Count('products'))
 
         context = {
-            "products": products
+            "products": products,
+            "categories": categories
         }
         return render(request, "home.html", context)
 
