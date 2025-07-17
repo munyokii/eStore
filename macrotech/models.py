@@ -1,5 +1,6 @@
 """Application models for the Macrotech app."""
 from django.db import models
+from django.core.validators import EmailValidator
 from django_ckeditor_5.fields import CKEditor5Field
 
 
@@ -92,3 +93,16 @@ class ContactMessage(models.Model):
         if self.name is None:
             return "No name provided (None)"
         return self.name
+
+
+class NewsletterSubscriber(models.Model):
+    """Newsletter Subscription Model"""
+    email = models.EmailField(unique=True, validators=[EmailValidator()])
+    subscribed_at = models.DateTimeField(auto_now_add=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        if self.email is None:
+            return "Invalid email (None)"
+        return self.email
