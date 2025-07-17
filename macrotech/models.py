@@ -106,3 +106,18 @@ class NewsletterSubscriber(models.Model):
         if self.email is None:
             return "Invalid email (None)"
         return self.email
+
+
+class EmailTemplate(models.Model):
+    """Email Templates Model"""
+    subject = models.CharField(max_length=255)
+    message = CKEditor5Field()
+    recipients = models.ManyToManyField(NewsletterSubscriber)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        if self.subject is None:
+            return "Please provide a subject (None)"
+        return self.subject
