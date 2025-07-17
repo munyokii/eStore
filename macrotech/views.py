@@ -3,14 +3,16 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django.utils.decorators import method_decorator
 from django.db.models import Count
 
 from macrotech.forms import ContactMessageForm
 
 from .utils import custom_login_required
-from .models import Category, Product
-from .email import EmailContactNotification
+from .models import Category, NewsletterSubscriber, Product
+from .email import EmailContactNotification, NewsletterEmailSender
 
 User = get_user_model()
 
@@ -132,6 +134,44 @@ class ContactView(View):
 
         else:
             return JsonResponse({'error': form.errors}, status=400)
+
+class NewsletterView(View):
+    """Handle Newsletter Subscription"""
+
+    def post(self, request, *args, **kwargs):
+        """Handle POST request to subscribe to the newsletter."""
+        email = request.POST.get('email', '').strip().lower()
+
+        try:
+            validate_email(email)
+
+            if NewsletterSubscriber.objects.filter(email=email).exists():
+                return JsonResponse(
+                    {'error': 'This email is already subscribed to the mailing list'}
+                )
+            recipient = NewsletterSubscriber(email=email)
+
+            email_sender = NewsletterEmailSender(email)
+            if email_sender.send():
+                recipient.save()
+                return JsonResponse({
+                    'success': 'Welcome aboard! 🚀 Thank you for subscribing to our newsletter! 🎉'
+                })
+            else:
+                return JsonResponse({'error': 'Email Notification Error. Please Try Again!'})
+
+        except ValidationError:
+            return JsonResponse({'error': 'Invalid email address'})
+
+        except Exception as e:
+            print(f"Unhandled error: {e}")
+            return JsonResponse({
+                'error': 'An error occurred while processing your request. Please try again later.'
+            })
+
+    def get(self, request, *args, **kwargs):
+        """Handle GET request for the newsletter subscription."""
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 
 class SupportView(View):
