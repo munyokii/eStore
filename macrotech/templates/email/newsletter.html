@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .email-container {
+      max-width: 600px;
+      margin: 20px auto;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .email-header {
+      background: #f9f9f9;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .email-header img {
+      max-width: 150px;
+    }
+
+    .email-body {
+      padding: 20px;
+      text-align: left;
+    }
+
+    .email-body h1 {
+      color: #273d4e;
+      font-size: 22px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .email-body p {
+      color: #555;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .email-footer {
+      background: #f9f9f9;
+      text-align: center;
+      padding: 15px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .email-footer h4 {
+      text-align: center;
+      color: #273d4e;
+    }
+
+    .social-icons {
+      margin: 10px 0;
+    }
+
+    .social-icons a {
+      margin: 0 5px;
+      display: inline-block;
+      text-decoration: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      line-height: 40px;
+      text-align: center;
+    }
+
+    .social-icons a img {
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+    }
+
+    .email-footer p {
+      color: #777;
+      font-size: 14px;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="email-container">
+    <div class="email-header">
+      <img src="{{ image_url }}" alt="MACROTECH">
+    </div>
+
+    <div class="email-body">
+      <h1>{{ subject }}</h1>
+      <p>{{ message }}</p>
+    </div>
+
+    <div class="email-footer">
+      <h4>Follow us on:</h4>
+      <div class="social-icons">
+        <a href="" class="facebook" title="Facebook">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+        </a>
+        <a href="" class="instagram" title="Instagram">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram">
+        </a>
+        <a href="" class="linkedin" title="LinkedIn" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">
+        </a>
+      </div>
+      <p>&copy; {{ current_year }} Macrotech. All Rights Reserved.</p>
+    </div>
+  </div>
+</body>
+
+</html>
