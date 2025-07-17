@@ -12,6 +12,12 @@
   <!-- Favicons -->
   <link href="{% static 'assets/img/favicon.ico' %}" rel="icon">
 
+  <!-- Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  />
+
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -592,14 +598,12 @@
           <div class="col-lg-8 text-center">
             <h2>Join Our Newsletter</h2>
             <p>Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</p>
-            <form action="forms/newsletter.php" method="post" class="php-email-form">
+            <form action="{% url 'newsletter' %}" method="post" class="php-email-form" id="newsletter-subscription">
+              {% csrf_token %}
               <div class="newsletter-form d-flex">
                 <input type="email" name="email" placeholder="Your email address" required="">
-                <button type="submit">Subscribe</button>
+                <button type="submit" id="newsletter-button">Subscribe</button>
               </div>
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">Your subscription request has been sent. Thank you!</div>
             </form>
           </div>
         </div>
@@ -626,7 +630,7 @@
                 </div>
                 <div class="contact-item">
                   <i class="bi bi-envelope"></i>
-                  <span>info@macrotech.com</span>
+                  <span>info@macrotech.co.ke</span>
                 </div>
               </div>
             </div>
@@ -762,6 +766,7 @@
 
   <!-- Main JS File -->
   <script src="{% static 'assets/js/main.js' %}"></script>
+  <script src="{% static 'assets/js/newsletter.js' %}"></script>
 
 </body>
 

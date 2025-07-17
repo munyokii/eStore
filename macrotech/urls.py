@@ -13,6 +13,7 @@ urlpatterns = [
   path("category/", views.CategoryView.as_view(), name="category"),
   path("about/", views.AboutView.as_view(), name="about"),
   path("macrotech/contact-us/", views.ContactView.as_view(), name="contact"),
+  path("newsletter/signup/", views.NewsletterView.as_view(), name="newsletter"),
   path("support/", views.SupportView.as_view(), name="support"),
   path("shipping-info/", views.ShippingInfoView.as_view(), name="shipping_info"),
   path("return-policy/", views.ReturnPolicyView.as_view(), name="return_policy"),
