@@ -1,10 +1,13 @@
 """Application models for the Macrotech app."""
 from django.db import models
 from django.core.validators import EmailValidator
+from django.contrib.auth import get_user_model
+
 from django_ckeditor_5.fields import CKEditor5Field
 
 
-# Create your models here.
+User = get_user_model()
+
 class Category(models.Model):
     """Model representing a product category."""
     CATEGORY_CHOICES = [
@@ -66,14 +69,23 @@ class Product(models.Model):
 
 class Review(models.Model):
     """Model representing a product review."""
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
     rating = models.PositiveIntegerField()
     reviewer_name = models.CharField(max_length=255)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     reviewer_email = models.EmailField()
     review_title = models.CharField(max_length=255)
     review_description = models.TextField()
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    created_at = models.DateTimeField(auto_now_add=True)
 
     objects = models.Manager()
+
+    @property
+    def reviewer_image_url(self):
+        """Return the URL of the reviewer's image."""
+        if self.user and hasattr(self.user, 'profile'):
+            return self.user.profile.image.url
+        return self.reviewer_image_url
 
     def __str__(self):
         return f"{self.product} - {self.review_title}"
