@@ -1,17 +1,17 @@
 """Application views for the app."""
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.utils.decorators import method_decorator
-from django.db.models import Count
+from django.db.models import Avg, Count
 
-from macrotech.forms import ContactMessageForm
+from macrotech.forms import ContactMessageForm, ReviewForm
 
 from .utils import custom_login_required
-from .models import Category, NewsletterSubscriber, Product
+from .models import Category, NewsletterSubscriber, Product, Review
 from .email import EmailContactNotification, NewsletterEmailSender
 
 User = get_user_model()
@@ -36,11 +36,89 @@ class ProductDetailView(View):
 
     def get(self, request, product_id):
         """Handle GET requests and render the product detail template."""
-        product = Product.objects.get(id=product_id)
+        product = get_object_or_404(Product, id=product_id)
+
+        reviews = product.reviews.all()
+        review_count = reviews.count()
+
+        average_rating = reviews.aggregate(Avg('rating'))['rating__avg'] or 0
+
+        rating_distribution = (
+            reviews.values('rating')
+                   .annotate(count=Count('rating'))
+                   .order_by('-rating')
+        )
+
+        rating_counts = {r['rating']: r['count'] for r in rating_distribution}
+
+        full_rating_counts = {i: rating_counts.get(i, 0) for i in range(1, 6)}
+
+        rating_percentages = {
+            i: round((count / review_count * 100)) if review_count > 0 else 0
+            for i, count in full_rating_counts.items()
+        }
+
+        initial_data = {}
+        if request.user.is_authenticated:
+            initial_data = {
+                'reviewer_name': request.user.get_full_name() or request.user.username,
+                'reviewer_email': request.user.email
+            }
+
         context = {
-            "product": product
+            "product": product,
+            "reviews": reviews.order_by('-created_at'),
+            "form": ReviewForm(initial=initial_data),
+            "review_count": review_count,
+            "average_rating": average_rating,
+            "rating_counts": full_rating_counts,
+            "rating_percentages": rating_percentages
         }
         return render(request, "product-details.html", context)
+
+    def post(self, request, product_id):
+        """Handle POST request to submit review form data."""
+        if not request.user.is_authenticated:
+            return JsonResponse({
+                'error': 'You must be logged in to post a review.'
+            }, status=401)
+
+        product = get_object_or_404(Product, id=product_id)
+        form = ReviewForm(request.POST)
+
+        if form.is_valid():
+            try:
+                if Review.objects.filter(product=product, user=request.user).exists():
+                    return JsonResponse({
+                        'error': 'You have already reviewed this product.'
+                    }, status=400)
+
+                review = form.save(commit=False)
+                review.product = product
+                review.user = request.user
+                review.reviewer_name = request.user.get_full_name() or request.user.username
+                review.reviewer_email = request.user.email
+                review.save()
+
+                return JsonResponse({
+                    'success': 'Your review was posted successfully🤝.',
+                    'review': {
+                        'rating': review.rating,
+                        'title': review.review_title,
+                        'description': review.review_description,
+                        'reviewer_name': review.reviewer_name,
+                        'created_at': review.created_at.strftime('%B %d, %Y')
+                    }
+                })
+
+            except Exception as e:
+                print(f'Error: {e}')
+                return JsonResponse({
+                    'error': 'Sorry, there was an issue posting your review. Please try again!'
+                }, status=500)
+        else:
+            errors = {field: error_list[0] for field, error_list in form.errors.items()}
+            return JsonResponse({'error': errors}, status=400)
 
 
 class CartView(View):
