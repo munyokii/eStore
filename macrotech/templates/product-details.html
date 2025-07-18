@@ -344,78 +344,41 @@
 
                     <div class="reviews-list mt-5">
                       <h4>Customer Reviews</h4>
-
-                      <!-- Review Item -->
-                      <div class="review-item">
-                        <div class="review-header">
-                          <div class="reviewer-info">
-                            <img src="{% static 'assets/img/person/person-m-1.webp' %}" alt="Reviewer" class="reviewer-avatar">
-                            <div>
-                              <h5 class="reviewer-name">John Doe</h5>
-                              <div class="review-date">03/15/2024</div>
+                        {% for review in reviews %}
+                        <!-- Review Item -->
+                        <div class="review-item">
+                          <div class="review-header">
+                            <div class="reviewer-info">
+                              {% if review.user and review.user.avatar %}
+                                <img src="{{ review.user.avatar.url }}" alt="{{ review.reviewer_name }}" class="reviewer-avatar">
+                              {% else %}
+                                <img src="https://robohash.org/{{ review.user.get_full_name }}.png" alt="Default avatar" class="reviewer-avatar">
+                              {% endif %}
+                              <div>
+                                <h5 class="reviewer-name">{{ review.reviewer_name }}</h5>
+                                <div class="review-date">{{ review.created_at|date:"m/d/Y" }}</div>
+                              </div>
+                            </div>
+                            <div class="review-rating">
+                              {% for i in "12345" %}
+                                {% if forloop.counter <= review.rating %}
+                                  <i class="bi bi-star-fill"></i>
+                                {% else %}
+                                  <i class="bi bi-star"></i>
+                                {% endif %}
+                              {% endfor %}
                             </div>
                           </div>
-                          <div class="review-rating">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
+                          <h5 class="review-title">{{ review.review_title }}</h5>
+                          <div class="review-content">
+                            <p>{{ review.review_description }}</p>
                           </div>
+                        </div><!-- End Review Item -->
+                        {% empty %}
+                        <div class="no-reviews">
+                          <p>No reviews yet. Be the first to review this product!</p>
                         </div>
-                        <h5 class="review-title">Exceptional sound quality and comfort</h5>
-                        <div class="review-content">
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at lacus congue, suscipit elit nec, tincidunt orci. Phasellus egestas nisi vitae lectus imperdiet venenatis. Suspendisse vulputate quam diam, et consectetur augue condimentum in.</p>
-                        </div>
-                      </div><!-- End Review Item -->
-
-                      <!-- Review Item -->
-                      <div class="review-item">
-                        <div class="review-header">
-                          <div class="reviewer-info">
-                            <img src="{% static 'assets/img/person/person-f-2.webp' %}" alt="Reviewer" class="reviewer-avatar">
-                            <div>
-                              <h5 class="reviewer-name">Jane Smith</h5>
-                              <div class="review-date">02/28/2024</div>
-                            </div>
-                          </div>
-                          <div class="review-rating">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star"></i>
-                          </div>
-                        </div>
-                        <h5 class="review-title">Great headphones, battery could be better</h5>
-                        <div class="review-content">
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at lacus congue, suscipit elit nec, tincidunt orci. Phasellus egestas nisi vitae lectus imperdiet venenatis.</p>
-                        </div>
-                      </div><!-- End Review Item -->
-
-                      <!-- Review Item -->
-                      <div class="review-item">
-                        <div class="review-header">
-                          <div class="reviewer-info">
-                            <img src="{% static 'assets/img/person/person-m-3.webp' %}" alt="Reviewer" class="reviewer-avatar">
-                            <div>
-                              <h5 class="reviewer-name">Michael Johnson</h5>
-                              <div class="review-date">02/15/2024</div>
-                            </div>
-                          </div>
-                          <div class="review-rating">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-half"></i>
-                          </div>
-                        </div>
-                        <h5 class="review-title">Impressive noise cancellation</h5>
-                        <div class="review-content">
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at lacus congue, suscipit elit nec, tincidunt orci. Phasellus egestas nisi vitae lectus imperdiet venenatis. Suspendisse vulputate quam diam.</p>
-                        </div>
-                      </div><!-- End Review Item -->
+                        {% endfor %}
 
                       <div class="text-center mt-4">
                         <button class="btn btn-outline-primary load-more-btn">Load More Reviews</button>

@@ -61,7 +61,6 @@ class ProductDetailView(View):
 
         product = get_object_or_404(Product, id=product_id)
         form = ReviewForm(request.POST)
-        print("Received POST data:", request.POST)
 
         if form.is_valid():
             try:

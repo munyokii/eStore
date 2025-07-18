@@ -80,13 +80,6 @@ class Review(models.Model):
 
     objects = models.Manager()
 
-    @property
-    def reviewer_image_url(self):
-        """Return the URL of the reviewer's image."""
-        if self.user and hasattr(self.user, 'profile'):
-            return self.user.profile.image.url
-        return self.reviewer_image_url
-
     def __str__(self):
         return f"{self.product} - {self.review_title}"
 
