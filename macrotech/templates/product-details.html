@@ -11,6 +11,9 @@
   <meta name="description" content="{{ product.product_description }}">
   <meta name="keywords" content="{{ product.product_keywords }}">
 
+  <!-- Toastr CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
 </head>
 
 <body class="product-details-page">
@@ -123,37 +126,6 @@
                 <i class="bi bi-check-circle-fill text-success"></i>
                 <span>In Stock</span>
                 <span class="stock-count">({{ product.stock }} items left)</span>
-              </div>
-
-              <!-- Color Options -->
-              <div class="product-colors mb-4">
-                <h6 class="option-title">Color:</h6>
-                <div class="color-options">
-                  <div class="color-option active" data-color="Black" style="background-color: #222;">
-                    <i class="bi bi-check"></i>
-                  </div>
-                  <div class="color-option" data-color="Silver" style="background-color: #C0C0C0;">
-                    <i class="bi bi-check"></i>
-                  </div>
-                  <div class="color-option" data-color="Blue" style="background-color: #1E3A8A;">
-                    <i class="bi bi-check"></i>
-                  </div>
-                  <div class="color-option" data-color="Rose Gold" style="background-color: #B76E79;">
-                    <i class="bi bi-check"></i>
-                  </div>
-                </div>
-                <span class="selected-option">Black</span>
-              </div>
-
-              <!-- Size Options if applicable -->
-              <div class="product-sizes mb-4">
-                <h6 class="option-title">Size:</h6>
-                <div class="size-options">
-                  <div class="size-option" data-size="S">S</div>
-                  <div class="size-option active" data-size="M">M</div>
-                  <div class="size-option" data-size="L">L</div>
-                </div>
-                <span class="selected-option">M</span>
               </div>
 
               <!-- Quantity Selector -->
@@ -300,47 +272,75 @@
                       </div>
                     </div>
 
-                    <div class="review-form-container">
-                      <h4>Write a Review</h4>
-                      <form class="review-form">
-                        <div class="rating-select mb-4">
-                          <label class="form-label">Your Rating</label>
-                          <div class="star-rating">
-                            <input type="radio" id="star5" name="rating" value="5"><label for="star5" title="5 stars"><i class="bi bi-star-fill"></i></label>
-                            <input type="radio" id="star4" name="rating" value="4"><label for="star4" title="4 stars"><i class="bi bi-star-fill"></i></label>
-                            <input type="radio" id="star3" name="rating" value="3"><label for="star3" title="3 stars"><i class="bi bi-star-fill"></i></label>
-                            <input type="radio" id="star2" name="rating" value="2"><label for="star2" title="2 stars"><i class="bi bi-star-fill"></i></label>
-                            <input type="radio" id="star1" name="rating" value="1"><label for="star1" title="1 star"><i class="bi bi-star-fill"></i></label>
+                    {% if user.is_authenticated %}
+                      <div class="review-form-container" id="review-container" data-product-id="{{ product.id }}">
+                        <h4>Write a Review</h4>
+                        <form class="review-form" id="reviewForm" method="post" action="{% url 'product_detail' product.id %}">
+                          {% csrf_token %}
+                          <div class="rating-select mb-4">
+                            <label class="form-label">Your Rating <span class="text-danger">*</span></label>
+                            <div class="star-rating">
+                                <input type="radio" id="star5" name="rating" value="5" {% if form.rating.value == '5' %}checked{% endif %}>
+                                <label for="star5" title="5 stars"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" id="star4" name="rating" value="4" {% if form.rating.value == '4' %}checked{% endif %}>
+                                <label for="star4" title="4 stars"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" id="star3" name="rating" value="3" {% if form.rating.value == '3' %}checked{% endif %}>
+                                <label for="star3" title="3 stars"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" id="star2" name="rating" value="2" {% if form.rating.value == '2' %}checked{% endif %}>
+                                <label for="star2" title="2 stars"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" id="star1" name="rating" value="1" {% if form.rating.value == '1' %}checked{% endif %}>
+                                <label for="star1" title="1 star"><i class="bi bi-star-fill"></i></label>
+                            </div>
+                            {% if form.rating.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.rating.errors %}
+                                        <span class="errors-display text-danger">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
                           </div>
-                        </div>
 
-                        <div class="row g-3 mb-3">
-                          <div class="col-md-6">
-                            <label for="review-name" class="form-label">Your Name</label>
-                            <input type="text" class="form-control" id="review-name" required="">
+                          <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                              <label for="review-name" class="form-label">Your Name</label>
+                              <input type="text" class="form-control" value="{{ form.reviewer_name.value }}" name="reviewer_name" id="review-name" readonly>
+                              {% for error in form.reviewer_name.errors %}
+                                <div class="errors-display">{{ error }}</div>
+                              {% endfor %}
+                            </div>
+                            <div class="col-md-6">
+                              <label for="review-email" class="form-label">Your Email</label>
+                              <input type="email" class="form-control" value="{{ form.reviewer_email.value }}" name="reviewer_email" id="review-email" readonly>
+                              {% for error in form.reviewer_email.errors %}
+                                <div class="errors-display">{{ error }}</div>
+                              {% endfor %}
+                            </div>
                           </div>
-                          <div class="col-md-6">
-                            <label for="review-email" class="form-label">Your Email</label>
-                            <input type="email" class="form-control" id="review-email" required="">
+
+                          <div class="mb-3">
+                            <label for="review-title" class="form-label">Review Title <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="review-title" name="review_title" value="{{ form.review_title.value|default:'' }}" required="">
+                            {% for error in form.review_title.errors %}
+                              <div class="errors-display">{{ error }}</div>
+                            {% endfor %}
                           </div>
-                        </div>
 
-                        <div class="mb-3">
-                          <label for="review-title" class="form-label">Review Title</label>
-                          <input type="text" class="form-control" id="review-title" required="">
-                        </div>
+                          <div class="mb-4">
+                            <label for="review-content" class="form-label">Your Review <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="review-content" rows="4" required="" name="review_description">{{ form.review_description.value|default:'' }}</textarea>
+                            {% for error in form.review_description.errors %}
+                              <div class="errors-display">{{ error }}</div>
+                            {% endfor %}
+                            <div class="form-text">Tell others what you think about this product. Be honest and helpful!</div>
+                          </div>
 
-                        <div class="mb-4">
-                          <label for="review-content" class="form-label">Your Review</label>
-                          <textarea class="form-control" id="review-content" rows="4" required=""></textarea>
-                          <div class="form-text">Tell others what you think about this product. Be honest and helpful!</div>
-                        </div>
+                          <div class="d-grid">
+                            <button type="submit" id="submitReviewButton" class="btn btn-primary">Submit Review</button>
+                          </div>
+                        </form>
+                      </div>
+                    {% endif %}
 
-                        <div class="d-grid">
-                          <button type="submit" class="btn btn-primary">Submit Review</button>
-                        </div>
-                      </form>
-                    </div>
 
                     <div class="reviews-list mt-5">
                       <h4>Customer Reviews</h4>
@@ -429,6 +429,14 @@
         </div>
       </div>
     </section><!-- /Product Details Section -->
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Toastr JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="{% static 'assets/js/review.js' %}"></script>
 
 </body>
 
