@@ -34,7 +34,7 @@ $(document).ready(function() {
             success: function(data) {
                 toastr.success(data['success'], 'Success');
                 form.trigger('reset');
-                window.location.reload();
+                // window.location.reload();
             },
             error: function(xhr) {
                 if (xhr.responseJSON) {
