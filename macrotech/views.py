@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.utils.decorators import method_decorator
-from django.db.models import Count
+from django.db.models import Avg, Count
 
 from macrotech.forms import ContactMessageForm, ReviewForm
 
@@ -38,6 +38,26 @@ class ProductDetailView(View):
         """Handle GET requests and render the product detail template."""
         product = get_object_or_404(Product, id=product_id)
 
+        reviews = product.reviews.all()
+        review_count = reviews.count()
+
+        average_rating = reviews.aggregate(Avg('rating'))['rating__avg'] or 0
+
+        rating_distribution = (
+            reviews.values('rating')
+                   .annotate(count=Count('rating'))
+                   .order_by('-rating')
+        )
+
+        rating_counts = {r['rating']: r['count'] for r in rating_distribution}
+
+        full_rating_counts = {i: rating_counts.get(i, 0) for i in range(1, 6)}
+
+        rating_percentages = {
+            i: round((count / review_count * 100)) if review_count > 0 else 0
+            for i, count in full_rating_counts.items()
+        }
+
         initial_data = {}
         if request.user.is_authenticated:
             initial_data = {
@@ -47,8 +67,12 @@ class ProductDetailView(View):
 
         context = {
             "product": product,
-            "reviews": product.reviews.all().order_by('-created_at'),
-            "form": ReviewForm(initial=initial_data)
+            "reviews": reviews.order_by('-created_at'),
+            "form": ReviewForm(initial=initial_data),
+            "review_count": review_count,
+            "average_rating": average_rating,
+            "rating_counts": full_rating_counts,
+            "rating_percentages": rating_percentages
         }
         return render(request, "product-details.html", context)
 

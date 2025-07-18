@@ -1,5 +1,8 @@
 {% extends 'layout.html' %}
 {% load static %}
+{% load custom_filters %}
+{% load math_filters %}
+
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +16,22 @@
 
   <!-- Toastr CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+  <style>
+    .progress {
+        height: 10px;
+        background-color: #e9ecef;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background-color: #ffc107;
+        transition: width 0.6s ease;
+        width: var(--progress-width, 0%);
+    }
+  </style>
 
 </head>
 
@@ -97,12 +116,20 @@
               <div class="product-meta mb-2">
                 <span class="product-category">{{ product.category }}</span>
                 <div class="product-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-half"></i>
-                  <span class="rating-count">(42)</span>
+                  {% with full_stars=average_rating|floatformat:"0"|add:"0" remainder=average_rating|mod:1 %}
+                    {% for i in "12345" %}
+                      {% if forloop.counter < full_stars or forloop.counter == full_stars and remainder < 0.25 %}
+                          <i class="bi bi-star-fill"></i>
+                      {% elif forloop.counter == full_stars and remainder >= 0.25 and remainder < 0.75 %}
+                          <i class="bi bi-star-half"></i>
+                      {% elif forloop.counter == full_stars and remainder >= 0.75 %}
+                          <i class="bi bi-star-fill"></i>
+                      {% else %}
+                          <i class="bi bi-star"></i>
+                      {% endif %}
+                    {% endfor %}
+                  {% endwith %}
+                  <span class="rating-count">({{ average_rating|floatformat:1 }})</span>
                 </div>
               </div>
 
@@ -188,7 +215,7 @@
                   <button class="nav-link" id="specifications-tab" data-bs-toggle="tab" data-bs-target="#specifications" type="button" role="tab" aria-controls="specifications" aria-selected="false">Specifications</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">Reviews (42)</button>
+                  <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">Reviews ({{ review_count }})</button>
                 </li>
               </ul>
               <div class="tab-content" id="productTabsContent">
@@ -218,59 +245,49 @@
                 </div>
 
                 <!-- Reviews Tab -->
-                <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
-                  <div class="product-reviews">
-                    <div class="reviews-summary">
-                      <div class="overall-rating">
-                        <div class="rating-number">4.5</div>
-                        <div class="rating-stars">
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-half"></i>
+                  <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                    <div class="product-reviews">
+                      <div class="reviews-summary">
+                        <div class="overall-rating">
+                          <div class="rating-number">{{ average_rating|floatformat:1 }}</div>
+                          <div class="rating-stars">
+                            {% with full_stars=average_rating|floatformat:"0"|add:"0" remainder=average_rating|mod:1 %}
+                              {% for i in "12345" %}
+                                  {% if forloop.counter < full_stars or forloop.counter == full_stars and remainder < 0.25 %}
+                                      <i class="bi bi-star-fill"></i>
+                                  {% elif forloop.counter == full_stars and remainder >= 0.25 and remainder < 0.75 %}
+                                      <i class="bi bi-star-half"></i>
+                                  {% elif forloop.counter == full_stars and remainder >= 0.75 %}
+                                      <i class="bi bi-star-fill"></i>
+                                  {% else %}
+                                      <i class="bi bi-star"></i>
+                                  {% endif %}
+                              {% endfor %}
+                            {% endwith %}
+                          </div>
+                          <div class="rating-count">Based on {{ review_count }} review{{ review_count|pluralize }}</div>
                         </div>
-                        <div class="rating-count">Based on 42 reviews</div>
-                      </div>
 
-                      <div class="rating-breakdown">
-                        <div class="rating-bar">
-                          <div class="rating-label">5 stars</div>
-                          <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                          <div class="rating-count">27</div>
-                        </div>
-                        <div class="rating-bar">
-                          <div class="rating-label">4 stars</div>
-                          <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                          <div class="rating-count">10</div>
-                        </div>
-                        <div class="rating-bar">
-                          <div class="rating-label">3 stars</div>
-                          <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 8%;" aria-valuenow="8" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                          <div class="rating-count">3</div>
-                        </div>
-                        <div class="rating-bar">
-                          <div class="rating-label">2 stars</div>
-                          <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 2%;" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                          <div class="rating-count">1</div>
-                        </div>
-                        <div class="rating-bar">
-                          <div class="rating-label">1 star</div>
-                          <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 2%;" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                          <div class="rating-count">1</div>
+                        <div class="rating-breakdown">
+                          {% for i in "54321" %}
+                              {% with i_num=i|add:"0" %}
+                                  <div class="rating-bar">
+                                      <div class="rating-label">{{ i_num }} star{{ i_num|pluralize }}</div>
+                                      <div class="progress">
+                                          <div class="progress-bar" 
+                                              style="--progress-width: {{ rating_percentages|get_item:i_num }}%"
+                                              role="progressbar"
+                                              aria-valuenow="{{ rating_percentages|get_item:i_num }}"
+                                              aria-valuemin="0"
+                                              aria-valuemax="100">
+                                          </div>
+                                      </div>
+                                      <div class="rating-count">{{ rating_counts|get_item:i_num }}</div>
+                                  </div>
+                              {% endwith %}
+                          {% endfor %}
                         </div>
                       </div>
-                    </div>
 
                     {% if user.is_authenticated %}
                       <div class="review-form-container" id="review-container" data-product-id="{{ product.id }}">
