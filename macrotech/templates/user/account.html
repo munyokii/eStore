@@ -52,10 +52,10 @@
               <!-- User Info -->
               <div class="user-info" data-aos="fade-right">
                 <div class="user-avatar">
-                  <img src="{% static 'assets/img/person/person-f-1.webp' %}" alt="Profile" loading="lazy">
+                  <img src="https://robohash.org/{{ user_detail.user.get_full_name }}.png" alt="Profile" loading="lazy">
                   <span class="status-badge"><i class="bi bi-shield-check"></i></span>
                 </div>
-                <h4>{{ user_detail.first_name }} {{ user_detail.last_name }}</h4>
+                <h4>{{ user_detail.last_name | capfirst }} {{ user_detail.first_name | capfirst }}</h4>
                 <div class="user-status">
                   <i class="bi bi-award"></i>
                   <span>Premium Member</span>
@@ -604,7 +604,7 @@
                   <div class="section-header" data-aos="fade-up">
                     <h2>My Wishlist</h2>
                     <div class="header-actions">
-                      <button type="button" class="btn-add-all">Add All to Cart</button>
+                      <button type="button" class="btn btn-primary">Add All to Cart</button>
                     </div>
                   </div>
 
@@ -700,7 +700,7 @@
                   <div class="section-header" data-aos="fade-up">
                     <h2>Payment Methods</h2>
                     <div class="header-actions">
-                      <button type="button" class="btn-add-new">
+                      <button type="button" class="btn btn-primary">
                         <i class="bi bi-plus-lg"></i>
                         Add New Card
                       </button>
@@ -843,7 +843,7 @@
                   <div class="section-header" data-aos="fade-up">
                     <h2>My Addresses</h2>
                     <div class="header-actions">
-                      <button type="button" class="btn-add-new">
+                      <button type="button" class="btn btn-primary">
                         <i class="bi bi-plus-lg"></i>
                         Add New Address
                       </button>
