@@ -89,15 +89,23 @@ WSGI_APPLICATION = "estore.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.mysql",
+#         "NAME": env('db_name'),
+#         "USER": env('db_user'),
+#         "PASSWORD": env('db_password'),
+#         "HOST": env('db_host'),
+#         "PORT": env('db_port'),
+#     }
+# }
+
+# Test Prod Database
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": env('db_name'),
-        "USER": env('db_user'),
-        "PASSWORD": env('db_password'),
-        "HOST": env('db_host'),
-        "PORT": env('db_port'),
-    }
+  "default": {
+    "ENGINE": "django.db.backends.sqlite3",
+    "NAME": BASE_DIR / "test_prod_db.sqlite3"
+  }
 }
 
 
