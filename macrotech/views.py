@@ -11,7 +11,7 @@ from django.db.models import Avg, Count
 from macrotech.forms import ContactMessageForm, ReviewForm
 
 from .utils import custom_login_required
-from .models import Category, NewsletterSubscriber, Product, Review
+from .models import BlogPost, Category, NewsletterSubscriber, Product, Review
 from .email import EmailContactNotification, NewsletterEmailSender
 
 User = get_user_model()
@@ -142,7 +142,12 @@ class BlogView(View):
 
     def get(self, request):
         """Handle GET requests and render the blog template."""
-        return render(request, "blog.html")
+        recent_blogs = BlogPost.objects.all()
+
+        context = {
+            "recent_blogs": recent_blogs
+        }
+        return render(request, "blog.html", context)
 
 
 class BlogDetailView(View):
