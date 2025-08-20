@@ -20,7 +20,7 @@
         <h1 class="mb-2 mb-lg-0">Blog</h1>
         <nav class="breadcrumbs">
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="{% url 'home' %}">Home</a></li>
             <li class="current">Blog</li>
           </ol>
         </nav>
@@ -39,15 +39,15 @@
               <!-- Side Post 1 -->
               <article class="post-item side-post" data-aos="fade-right" data-aos-delay="100">
                 <div class="post-img">
-                  <img src="{% static 'assets/img/blog/blog-post-3.webp' %}" alt="Post Image" class="img-fluid" loading="lazy">
-                  <span class="category entertainment">Entertainment</span>
+                  <img src="{{ ent_category.post_image.url }}" alt="{{ ent_category.post_title }}" class="img-fluid" loading="lazy">
+                  <span class="category entertainment">{{ ent_category.post_category }}</span>
                 </div>
                 <div class="post-content">
                   <h3 class="post-title">
-                    <a href="{% url 'blog_detail' %}">Maecenas tempus tellus eget condimentum rhoncus semper quam</a>
+                    <a href="{% url 'blog_detail' %}">{{ ent_category.post_title }}</a>
                   </h3>
                   <div class="post-meta">
-                    <span>March 15, 2025</span>
+                    <span>{{ ent_category.posted_at|date:"F j, Y" }}</span>
                     <span class="dot">•</span>
                     <span>3 Comments</span>
                   </div>
@@ -57,15 +57,15 @@
               <!-- Side Post 2 -->
               <article class="post-item side-post" data-aos="fade-right" data-aos-delay="200">
                 <div class="post-img">
-                  <img src="{% static 'assets/img/blog/blog-post-9.webp' %}" alt="Post Image" class="img-fluid" loading="lazy">
-                  <span class="category technology">Technology</span>
+                  <img src="{{ tech_category.post_image.url }}" alt="{{ tech_category.post_title }}" class="img-fluid" loading="lazy">
+                  <span class="category technology">{{ tech_category.post_category }}</span>
                 </div>
                 <div class="post-content">
                   <h3 class="post-title">
-                    <a href="{% url 'blog_detail' %}">Donec pede justo fringilla vel aliquet nec vulputate eget</a>
+                    <a href="{% url 'blog_detail' %}">{{ tech_category.post_title }}</a>
                   </h3>
                   <div class="post-meta">
-                    <span>March 14, 2025</span>
+                    <span>{{ tech_category.posted_at|date:"F j, Y" }}</span>
                     <span class="dot">•</span>
                     <span>5 Comments</span>
                   </div>
@@ -78,18 +78,18 @@
           <div class="col-lg-6">
             <article class="post-item main-post" data-aos="fade-up">
               <div class="post-img">
-                <img src="{% static 'assets/img/blog/blog-post-7.webp' %}" alt="Post Image" class="img-fluid">
-                <span class="category business">Business</span>
+                <img src="{{ business_category.post_image.url }}" alt="{{ business_category.post_title }}" class="img-fluid">
+                <span class="category business">{{ business_category.post_category }}</span>
               </div>
               <div class="post-content">
                 <h2 class="post-title">
-                  <a href="{% url 'blog_detail' %}">Curabitur ullamcorper ultricies nisi nam eget dui etiam rhoncus</a>
+                  <a href="{% url 'blog_detail' %}">{{ business_category.post_title }}</a>
                 </h2>
                 <p class="post-excerpt">
-                  Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante.
+                  {{ business_category.post_description|safe }}
                 </p>
                 <div class="post-meta">
-                  <span>March 16, 2025</span>
+                  <span>{{ business_category.posted_at|date:"M j, Y" }}</span>
                   <span class="dot">•</span>
                   <span>8 Comments</span>
                 </div>
@@ -103,15 +103,15 @@
               <!-- Side Post 3 -->
               <article class="post-item side-post" data-aos="fade-left" data-aos-delay="100">
                 <div class="post-img">
-                  <img src="{% static 'assets/img/blog/blog-post-6.webp' %}" alt="Post Image" class="img-fluid" loading="lazy">
-                  <span class="category technology">Technology</span>
+                  <img src="{{ pol_category.post_image.url }}" alt="{{ pol_category.post_title }}" class="img-fluid" loading="lazy">
+                  <span class="category politics">{{ pol_category.post_category }}</span>
                 </div>
                 <div class="post-content">
                   <h3 class="post-title">
-                    <a href="{% url 'blog_detail' %}">Aenean vulputate eleifend tellus aenean leo ligula porttitor</a>
+                    <a href="{% url 'blog_detail' %}">{{ pol_category.post_title }}</a>
                   </h3>
                   <div class="post-meta">
-                    <span>March 13, 2025</span>
+                    <span>{{ pol_category.posted_at|date:"F j, Y" }}</span>
                     <span class="dot">•</span>
                     <span>2 Comments</span>
                   </div>
@@ -121,15 +121,15 @@
               <!-- Side Post 4 -->
               <article class="post-item side-post" data-aos="fade-left" data-aos-delay="200">
                 <div class="post-img">
-                  <img src="{% static 'assets/img/blog/blog-post-9.webp' %}" alt="Post Image" class="img-fluid" loading="lazy">
-                  <span class="category lifestyle">Lifestyle</span>
+                  <img src="{{ life_category.post_image.url }}" alt="{{ life_category.post_title }}" class="img-fluid" loading="lazy">
+                  <span class="category lifestyle">{{ life_category.post_category }}</span>
                 </div>
                 <div class="post-content">
                   <h3 class="post-title">
-                    <a href="#">Etiam sit amet orci eget eros faucibus tincidunt duis leo</a>
+                    <a href="#">{{ life_category.post_title }}</a>
                   </h3>
                   <div class="post-meta">
-                    <span>March 12, 2025</span>
+                    <span>{{ life_category.posted_at|date:"F j, Y" }}</span>
                     <span class="dot">•</span>
                     <span>4 Comments</span>
                   </div>
@@ -154,9 +154,9 @@
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="row gy-4">
-          <div class="col-lg-4">
-            <article>
-              {% for post in recent_posts %}
+          {% for post in recent_blogs %}
+            <div class="col-lg-4">
+              <article>
                 <div class="post-img">
                   <img src="{{ post.post_image.url }}" alt="{{ post.post_title }}" class="img-fluid">
                 </div>
@@ -176,143 +176,13 @@
                   <div class="post-meta">
                     <p class="post-author">{{ post.user.last_name | capfirst }} {{ post.user.first_name | capfirst }}</p>
                     <p class="post-date">
-                      <time datetime="2022-01-01">{{ post.posted_at|date:"M j, Y" }} Jan 1, 2022</time>
+                      <time datetime="2022-01-01">{{ post.posted_at|date:"M j, Y" }}</time>
                     </p>
                   </div>
                 </div>
-              {% endfor %}
-            </article>
-          </div><!-- End post list item -->
-          <div class="col-lg-4">
-            <article>
-
-              <div class="post-img">
-                <img src="{% static 'assets/img/blog/blog-post-2.webp' %}" alt="" class="img-fluid">
-              </div>
-
-              <p class="post-category">Sports</p>
-
-              <h2 class="title">
-                <a href="{% url 'blog_detail' %}">Nisi magni odit consequatur autem nulla dolorem</a>
-              </h2>
-
-              <div class="d-flex align-items-center">
-                <img src="{% static 'assets/img/person/person-f-13.webp' %}" alt="" class="img-fluid post-author-img flex-shrink-0">
-                <div class="post-meta">
-                  <p class="post-author">Allisa Mayer</p>
-                  <p class="post-date">
-                    <time datetime="2022-01-01">Jun 5, 2022</time>
-                  </p>
-                </div>
-              </div>
-
-            </article>
-          </div><!-- End post list item -->
-
-          <div class="col-lg-4">
-            <article>
-
-              <div class="post-img">
-                <img src="{% static 'assets/img/blog/blog-post-3.webp' %}" alt="" class="img-fluid">
-              </div>
-
-              <p class="post-category">Entertainment</p>
-
-              <h2 class="title">
-                <a href="{% url 'blog_detail' %}">Possimus soluta ut id suscipit ea ut in quo quia et soluta</a>
-              </h2>
-
-              <div class="d-flex align-items-center">
-                <img src="{% static 'assets/img/person/person-m-10.webp' %}" alt="" class="img-fluid post-author-img flex-shrink-0">
-                <div class="post-meta">
-                  <p class="post-author">Mark Dower</p>
-                  <p class="post-date">
-                    <time datetime="2022-01-01">Jun 22, 2022</time>
-                  </p>
-                </div>
-              </div>
-
-            </article>
-          </div><!-- End post list item -->
-
-          <div class="col-lg-4">
-            <article>
-
-              <div class="post-img">
-                <img src="{% static 'assets/img/blog/blog-post-4.webp' %}" alt="" class="img-fluid">
-              </div>
-
-              <p class="post-category">Sports</p>
-
-              <h2 class="title">
-                <a href="{% url 'blog_detail' %}">Non rem rerum nam cum quo minus olor distincti</a>
-              </h2>
-
-              <div class="d-flex align-items-center">
-                <img src="{% static 'assets/img/person/person-f-14.webp' %}" alt="" class="img-fluid post-author-img flex-shrink-0">
-                <div class="post-meta">
-                  <p class="post-author">Lisa Neymar</p>
-                  <p class="post-date">
-                    <time datetime="2022-01-01">Jun 30, 2022</time>
-                  </p>
-                </div>
-              </div>
-
-            </article>
-          </div><!-- End post list item -->
-
-          <div class="col-lg-4">
-            <article>
-
-              <div class="post-img">
-                <img src="{% static 'assets/img/blog/blog-post-5.webp' %}" alt="" class="img-fluid">
-              </div>
-
-              <p class="post-category">Politics</p>
-
-              <h2 class="title">
-                <a href="{% url 'blog_detail' %}">Accusamus quaerat aliquam qui debitis facilis consequatur</a>
-              </h2>
-
-              <div class="d-flex align-items-center">
-                <img src="{% static 'assets/img/person/person-m-11.webp' %}" alt="" class="img-fluid post-author-img flex-shrink-0">
-                <div class="post-meta">
-                  <p class="post-author">Denis Peterson</p>
-                  <p class="post-date">
-                    <time datetime="2022-01-01">Jan 30, 2022</time>
-                  </p>
-                </div>
-              </div>
-
-            </article>
-          </div><!-- End post list item -->
-
-          <div class="col-lg-4">
-            <article>
-
-              <div class="post-img">
-                <img src="{% static 'assets/img/blog/blog-post-6.webp' %}" alt="" class="img-fluid">
-              </div>
-
-              <p class="post-category">Entertainment</p>
-
-              <h2 class="title">
-                <a href="{% url 'blog_detail' %}">Distinctio provident quibusdam numquam aperiam aut</a>
-              </h2>
-
-              <div class="d-flex align-items-center">
-                <img src="{% static 'assets/img/person/person-f-15.webp' %}" alt="" class="img-fluid post-author-img flex-shrink-0">
-                <div class="post-meta">
-                  <p class="post-author">Mika Lendon</p>
-                  <p class="post-date">
-                    <time datetime="2022-01-01">Feb 14, 2022</time>
-                  </p>
-                </div>
-              </div>
-
-            </article>
-          </div><!-- End post list item -->
-
+              </article>
+            </div><!-- End post list item -->
+          {% endfor %}
         </div>
       </div>
 
