@@ -8957,8 +8957,16 @@ section,
   background-color: #2ecc71;
 }
 
+.blog-hero .post-item .post-img .category.politics {
+  background-color: #b4cc2e;
+}
+
 .blog-hero .post-item .post-img .category.lifestyle {
   background-color: #9b59b6;
+}
+
+.blog-hero .post-item .post-img .category.sports {
+  background-color: #fcbe05;
 }
 
 .blog-hero .post-item .post-content .post-title {

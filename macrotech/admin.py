@@ -8,7 +8,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django_ckeditor_5.fields import CKEditor5Widget
 
-from macrotech.models import Category, EmailTemplate, NewsletterSubscriber, Product, Review
+from macrotech.models import Category, EmailTemplate, NewsletterSubscriber, Product, Review, BlogPost
 
 
 logger = logging.getLogger(__name__)
@@ -58,5 +58,6 @@ class EmailTemplateAdmin(admin.ModelAdmin):
 admin.site.register(Product)
 admin.site.register(Review)
 admin.site.register(Category)
+admin.site.register(BlogPost)
 admin.site.register(NewsletterSubscriber)
 admin.site.register(EmailTemplate,  EmailTemplateAdmin)

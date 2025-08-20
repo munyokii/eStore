@@ -11,7 +11,7 @@ from django.db.models import Avg, Count
 from macrotech.forms import ContactMessageForm, ReviewForm
 
 from .utils import custom_login_required
-from .models import Category, NewsletterSubscriber, Product, Review
+from .models import BlogPost, Category, NewsletterSubscriber, Product, Review
 from .email import EmailContactNotification, NewsletterEmailSender
 
 User = get_user_model()
@@ -142,7 +142,43 @@ class BlogView(View):
 
     def get(self, request):
         """Handle GET requests and render the blog template."""
-        return render(request, "blog.html")
+        business_category = BlogPost.objects.filter(
+            post_category="Business"
+            ).order_by(
+                "-posted_at").first()
+
+        tech_category = BlogPost.objects.filter(
+            post_category="Technology"
+            ).order_by(
+                "-posted_at").first()
+
+        ent_category = BlogPost.objects.filter(
+            post_category="Entertainment"
+            ).order_by(
+                "-posted_at").first()
+
+        life_category = BlogPost.objects.filter(
+            post_category="Lifestyle"
+            ).order_by(
+                "-posted_at").first()
+
+        pol_category = BlogPost.objects.filter(
+            post_category="Politics"
+            ).order_by(
+                "-posted_at").first()
+
+        recent_blogs = BlogPost.objects.all().order_by("-posted_at")[:6]
+
+
+        context = {
+            "recent_blogs": recent_blogs,
+            "business_category": business_category,
+            "tech_category": tech_category,
+            "ent_category": ent_category,
+            "life_category": life_category,
+            "pol_category": pol_category
+        }
+        return render(request, "blog.html", context)
 
 
 class BlogDetailView(View):

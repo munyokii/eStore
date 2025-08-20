@@ -126,3 +126,28 @@ class EmailTemplate(models.Model):
         if self.subject is None:
             return "Please provide a subject (None)"
         return self.subject
+
+
+class BlogPost(models.Model):
+    """Model for blog posts"""
+    POST_CATEGORIES = {
+        'Entertainment': 'Entertainment',
+        'Business': 'Business',
+        'Technology': 'Technology',
+        'Lifestyle': 'Lifestyle',
+        'Politics': 'Politics',
+        'Sports': 'Sports'
+    }
+
+    post_image = models.ImageField(upload_to="posts/")
+    post_title = models.CharField(max_length=255)
+    post_category = models.CharField(choices=POST_CATEGORIES)
+    post_description = CKEditor5Field()
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    posted_at = models.DateTimeField(auto_now_add=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        """String statement for debug"""
+        return str(self.post_title)
