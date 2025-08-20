@@ -111,7 +111,7 @@ class ProductDetailView(View):
                     }
                 })
 
-            except Exception as e:
+            except (ValueError, AttributeError) as e:
                 print(f'Error: {e}')
                 return JsonResponse({
                     'error': 'Sorry, there was an issue posting your review. Please try again!'
@@ -184,9 +184,22 @@ class BlogView(View):
 class BlogDetailView(View):
     """Class-based view to display the blog-details.html template."""
 
-    def get(self, request):
+    def get(self, request, post_id):
         """Handle GET requests and render the blog-details template."""
-        return render(request, "blog-details.html")
+        blog_post = get_object_or_404(BlogPost, id=post_id)
+
+        categories = BlogPost.objects.values('post_category').annotate(
+            count=Count('post_category')).order_by('post_category')
+
+        recent_posts = BlogPost.objects.exclude(
+                id=post_id).order_by("-posted_at")[:5]
+
+        context = {
+            "blog_post": blog_post,
+            "categories": categories,
+            "recent_posts": recent_posts
+        }
+        return render(request, "blog-details.html", context)
 
 
 class AboutView(View):
