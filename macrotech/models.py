@@ -144,6 +144,12 @@ class BlogPost(models.Model):
     post_category = models.CharField(choices=POST_CATEGORIES)
     post_description = CKEditor5Field()
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    post_headline = models.CharField(max_length=255, blank=True, null=True)
+    post_cite = models.CharField(max_length=255, blank=True, null=True)
+    post_content = CKEditor5Field()
+    post_tags = models.CharField(max_length=255, blank=True, null=True)
+    post_content_image = models.ImageField(upload_to="posts/content/", blank=True, null=True)
+    image_caption = models.CharField(max_length=255, blank=True, null=True)
     posted_at = models.DateTimeField(auto_now_add=True)
 
     objects = models.Manager()

@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Blog Details - eStore Bootstrap Template</title>
+  <title>Blog Details - {{ blog_post.post_title }}</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -39,26 +39,30 @@
               <article class="article">
 
                 <div class="post-img">
-                  <img src="{% static 'assets/img/blog/blog-post-7.webp' %}" alt="Featured blog image" class="img-fluid" loading="lazy">
+                  <img src="{{ blog_post.post_image.url }}" alt="{{ blog_post.post_title}}" class="img-fluid" loading="lazy">
                 </div>
 
                 <div class="article-content" data-aos="fade-up" data-aos-delay="100">
                   <div class="meta-categories">
-                    <span class="category"><i class="bi bi-folder"></i> Technology</span>
+                    <span class="category"><i class="bi bi-folder"></i> {{ blog_post.post_category }}</span>
                     <span class="reading-time"><i class="bi bi-clock-history"></i> 8 min read</span>
                   </div>
 
-                  <h1 class="title">The Future of Artificial Intelligence: Transforming Industries and Reshaping Society</h1>
+                  <h1 class="title">{{ blog_post.post_title }}</h1>
 
                   <div class="meta-top">
                     <ul>
                       <li class="d-flex align-items-center">
-                        <img src="{% static 'assets/img/person/person-m-7.webp' %}" alt="Author" class="author-img">
-                        <a href="{% url 'blog_detail' %}">Sarah Anderson</a>
+                        {% if blog_post.user and blog_post.user.avatar %}
+                          <img src="{{ blog_post.user.avatar.url }}" alt="Author" class="author-img">
+                        {% else %}
+                          <img src="https://robohash.org/{{ blog_post.user.get_full_name }}.png" alt="{{ blog_post.user.get_full_name }}" class="author-img">
+                        {% endif %}
+                        <a href="">{{ blog_post.user.get_full_name }}</a>
                       </li>
                       <li class="d-flex align-items-center">
                         <i class="bi bi-calendar-date"></i>
-                        <time datetime="2025-02-13">Feb 13, 2025</time>
+                        <time datetime="2025-02-13">{{ blog_post.posted_at|date:"F j, Y" }}</time>
                       </li>
                       <li class="d-flex align-items-center">
                         <i class="bi bi-chat-dots"></i>
@@ -68,62 +72,26 @@
                   </div>
 
                   <div class="content">
-                    <p class="lead">
-                      Artificial Intelligence has emerged as one of the most transformative technologies of our time, revolutionizing industries from healthcare to finance, and fundamentally changing how we live and work.
-                    </p>
-
                     <p>
-                      In recent years, the advancement of AI technologies has accelerated at an unprecedented pace, bringing both exciting opportunities and unique challenges. This comprehensive analysis explores the current state of AI, its impact across various sectors, and what the future might hold for this revolutionary technology.
+                      {{ blog_post.post_description|safe }}
                     </p>
-
-                    <h2>The Current State of AI Technology</h2>
-                    <p>
-                      Modern AI systems have achieved remarkable capabilities in areas such as:
-                    </p>
-                    <ul>
-                      <li>Natural Language Processing and Generation</li>
-                      <li>Computer Vision and Image Recognition</li>
-                      <li>Predictive Analytics and Decision Making</li>
-                      <li>Autonomous Systems and Robotics</li>
-                    </ul>
 
                     <div class="content-image">
-                      <img src="{% static 'assets/img/blog/blog-hero-2.webp' %}" class="img-fluid" alt="AI Technology Implementation" loading="lazy">
-                      <figcaption>AI systems processing and analyzing complex data patterns</figcaption>
+                      <img src="{{ blog_post.post_content_image.url }}" class="img-fluid" alt="{{ blog_post.post_title }}" loading="lazy">
+                      <figcaption>{{ blog_post.image_caption }}</figcaption>
                     </div>
-
-                    <h2>Transforming Industries</h2>
-                    <p>
-                      From healthcare diagnostics to financial forecasting, AI is revolutionizing traditional business models and creating new opportunities for innovation and efficiency. Organizations worldwide are leveraging AI to streamline operations, enhance customer experiences, and drive growth.
-                    </p>
 
                     <blockquote>
                       <p>
-                        "Artificial Intelligence is not just another technological advancement; it's a fundamental shift in how we approach problem-solving and decision-making across every industry and sector of society."
+                        "{{ blog_post.post_headline }}"
                       </p>
-                      <cite>Dr. Rachel Chen, AI Research Director</cite>
+                      <cite>{{ blog_post.post_cite }}</cite>
                     </blockquote>
 
-                    <h2>Ethical Considerations and Future Challenges</h2>
                     <p>
-                      As AI continues to evolve, important questions arise about privacy, security, and the ethical implications of increasingly autonomous systems. Addressing these challenges while fostering innovation will be crucial for the sustainable development of AI technologies.
+                      {{ blog_post.post_content|safe }}
                     </p>
 
-                    <div class="content-image-split">
-                      <div class="row g-4">
-                        <div class="col-md-6">
-                          <img src="{% static 'assets/img/blog/blog-post-square-1.webp' %}" class="img-fluid" alt="AI Ethics Discussion" loading="lazy">
-                        </div>
-                        <div class="col-md-6">
-                          <img src="{% static 'assets/img/blog/blog-post-square-2.webp' %}" class="img-fluid" alt="AI Future Prospects" loading="lazy">
-                        </div>
-                      </div>
-                    </div>
-
-                    <h2>Looking Ahead</h2>
-                    <p>
-                      The future of AI promises even more groundbreaking developments, from advanced cognitive systems to seamless human-AI collaboration. As we move forward, the key will be balancing technological progress with ethical considerations and societal impact.
-                    </p>
                   </div>
 
                   <div class="meta-bottom">
@@ -444,12 +412,9 @@
 
               <h3 class="widget-title">Categories</h3>
               <ul class="mt-3">
-                <li><a href="#">General <span>(25)</span></a></li>
-                <li><a href="#">Lifestyle <span>(12)</span></a></li>
-                <li><a href="#">Travel <span>(5)</span></a></li>
-                <li><a href="#">Design <span>(22)</span></a></li>
-                <li><a href="#">Creative <span>(8)</span></a></li>
-                <li><a href="#">Educaion <span>(14)</span></a></li>
+              {% for category in categories %}
+                <li><a href="#">{{ category.post_category }} <span>({{ category.count }})</span></a></li>
+              {% endfor %}
               </ul>
 
             </div><!--/Categories Widget -->
@@ -459,45 +424,15 @@
 
               <h3 class="widget-title">Recent Posts</h3>
 
-              <div class="post-item">
-                <img src="{% static 'assets/img/blog/blog-post-square-1.webp' %}" alt="" class="flex-shrink-0">
-                <div>
-                  <h4><a href="{% url 'blog_detail' %}">Nihil blanditiis at in nihil autem</a></h4>
-                  <time datetime="2020-01-01">Jan 1, 2020</time>
-                </div>
-              </div><!-- End recent post item-->
-
-              <div class="post-item">
-                <img src="{% static 'assets/img/blog/blog-post-square-2.webp' %}" alt="" class="flex-shrink-0">
-                <div>
-                  <h4><a href="{% url 'blog_detail' %}">Quidem autem et impedit</a></h4>
-                  <time datetime="2020-01-01">Jan 1, 2020</time>
-                </div>
-              </div><!-- End recent post item-->
-
-              <div class="post-item">
-                <img src="{% static 'assets/img/blog/blog-post-square-3.webp' %}" alt="" class="flex-shrink-0">
-                <div>
-                  <h4><a href="{% url 'blog_detail' %}">Id quia et et ut maxime similique occaecati ut</a></h4>
-                  <time datetime="2020-01-01">Jan 1, 2020</time>
-                </div>
-              </div><!-- End recent post item-->
-
-              <div class="post-item">
-                <img src="{% static 'assets/img/blog/blog-post-square-4.webp' %}" alt="" class="flex-shrink-0">
-                <div>
-                  <h4><a href="{% url 'blog_detail' %}">Laborum corporis quo dara net para</a></h4>
-                  <time datetime="2020-01-01">Jan 1, 2020</time>
-                </div>
-              </div><!-- End recent post item-->
-
-              <div class="post-item">
-                <img src="{% static 'assets/img/blog/blog-post-square-5.webp' %}" alt="" class="flex-shrink-0">
-                <div>
-                  <h4><a href="{% url 'blog_detail' %}">Et dolores corrupti quae illo quod dolor</a></h4>
-                  <time datetime="2020-01-01">Jan 1, 2020</time>
-                </div>
-              </div><!-- End recent post item-->
+              {% for recent in recent_posts %}
+                <div class="post-item">
+                  <img src="{{ recent.post_image.url }}" alt="{{ recent.post_title }}" class="flex-shrink-0">
+                  <div>
+                    <h4><a href="{% url 'blog_detail' recent.id %}">{{ recent.post_title }}</a></h4>
+                    <time datetime="{{ recent.posted_at|date:'c' }}">{{ recent.posted_at|date:'M d, Y' }}</time>
+                  </div>
+                </div><!-- End recent post item-->
+              {% endfor %}
 
             </div><!--/Recent Posts Widget -->
 

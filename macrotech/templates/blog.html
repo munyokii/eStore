@@ -44,7 +44,7 @@
                 </div>
                 <div class="post-content">
                   <h3 class="post-title">
-                    <a href="{% url 'blog_detail' %}">{{ ent_category.post_title }}</a>
+                    <a href="{% url 'blog_detail' ent_category.id %}">{{ ent_category.post_title }}</a>
                   </h3>
                   <div class="post-meta">
                     <span>{{ ent_category.posted_at|date:"F j, Y" }}</span>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="post-content">
                   <h3 class="post-title">
-                    <a href="{% url 'blog_detail' %}">{{ tech_category.post_title }}</a>
+                    <a href="{% url 'blog_detail' tech_category.id %}">{{ tech_category.post_title }}</a>
                   </h3>
                   <div class="post-meta">
                     <span>{{ tech_category.posted_at|date:"F j, Y" }}</span>
@@ -83,7 +83,7 @@
               </div>
               <div class="post-content">
                 <h2 class="post-title">
-                  <a href="{% url 'blog_detail' %}">{{ business_category.post_title }}</a>
+                  <a href="{% url 'blog_detail' business_category.id %}">{{ business_category.post_title }}</a>
                 </h2>
                 <p class="post-excerpt">
                   {{ business_category.post_description|safe }}
@@ -108,7 +108,7 @@
                 </div>
                 <div class="post-content">
                   <h3 class="post-title">
-                    <a href="{% url 'blog_detail' %}">{{ pol_category.post_title }}</a>
+                    <a href="{% url 'blog_detail' pol_category.id %}">{{ pol_category.post_title }}</a>
                   </h3>
                   <div class="post-meta">
                     <span>{{ pol_category.posted_at|date:"F j, Y" }}</span>
@@ -126,7 +126,7 @@
                 </div>
                 <div class="post-content">
                   <h3 class="post-title">
-                    <a href="#">{{ life_category.post_title }}</a>
+                    <a href="{% url 'blog_detail' life_category.id %}">{{ life_category.post_title }}</a>
                   </h3>
                   <div class="post-meta">
                     <span>{{ life_category.posted_at|date:"F j, Y" }}</span>
@@ -164,7 +164,7 @@
                 <p class="post-category">{{ post.post_category }}</p>
 
                 <h2 class="title">
-                  <a href="{% url 'blog_detail' %}">{{ post.post_title }}</a>
+                  <a href="{% url 'blog_detail' post.id %}">{{ post.post_title }}</a>
                 </h2>
 
                 <div class="d-flex align-items-center">
