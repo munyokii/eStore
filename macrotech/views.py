@@ -194,10 +194,13 @@ class BlogDetailView(View):
         recent_posts = BlogPost.objects.exclude(
                 id=post_id).order_by("-posted_at")[:5]
 
+        tags = [tag.strip() for tag in blog_post.post_tags.split(' ')]
+
         context = {
             "blog_post": blog_post,
             "categories": categories,
-            "recent_posts": recent_posts
+            "recent_posts": recent_posts,
+            "tags": tags
         }
         return render(request, "blog-details.html", context)
 

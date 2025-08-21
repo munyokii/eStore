@@ -98,10 +98,9 @@
                     <div class="article-tags">
                       <i class="bi bi-tags"></i>
                       <ul class="tags">
-                        <li><a href="#">Artificial Intelligence</a></li>
-                        <li><a href="#">Technology</a></li>
-                        <li><a href="#">Innovation</a></li>
-                        <li><a href="#">Future</a></li>
+                        {% for tag in tags %}
+                          <li><a href="#">{{ tag }}</a></li>
+                        {% endfor %}
                       </ul>
                     </div>
 
@@ -426,7 +425,7 @@
 
               {% for recent in recent_posts %}
                 <div class="post-item">
-                  <img src="{{ recent.post_image.url }}" alt="{{ recent.post_title }}" class="flex-shrink-0">
+                  <img src="{{ recent.post_image.url }}" alt="{{ recent.post_title }}" class="flex-shrink-0" style="width: 50px; height: 50px; border-radius: 100%;">
                   <div>
                     <h4><a href="{% url 'blog_detail' recent.id %}">{{ recent.post_title }}</a></h4>
                     <time datetime="{{ recent.posted_at|date:'c' }}">{{ recent.posted_at|date:'M d, Y' }}</time>
@@ -441,17 +440,9 @@
 
               <h3 class="widget-title">Tags</h3>
               <ul>
-                <li><a href="#">App</a></li>
-                <li><a href="#">IT</a></li>
-                <li><a href="#">Business</a></li>
-                <li><a href="#">Mac</a></li>
-                <li><a href="#">Design</a></li>
-                <li><a href="#">Office</a></li>
-                <li><a href="#">Creative</a></li>
-                <li><a href="#">Studio</a></li>
-                <li><a href="#">Smart</a></li>
-                <li><a href="#">Tips</a></li>
-                <li><a href="#">Marketing</a></li>
+                {% for tag in tags %}
+                  <li><a href="#">{{ tag }}</a></li>
+                {% endfor %}
               </ul>
 
             </div><!--/Tags Widget -->
