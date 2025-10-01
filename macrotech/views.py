@@ -10,7 +10,7 @@ from django.db.models import Avg, Count
 
 from macrotech.forms import ContactMessageForm, ReviewForm
 
-from .utils import custom_login_required
+from .utils import custom_login_required, calculate_reading_time
 from .models import BlogPost, Category, NewsletterSubscriber, Product, Review
 from .email import EmailContactNotification, NewsletterEmailSender
 
@@ -196,11 +196,16 @@ class BlogDetailView(View):
 
         tags = [tag.strip() for tag in blog_post.post_tags.split(' ')]
 
+        reading_time = calculate_reading_time(
+            f"{blog_post.post_description} {blog_post.post_content}"
+        )
+
         context = {
             "blog_post": blog_post,
             "categories": categories,
             "recent_posts": recent_posts,
-            "tags": tags
+            "tags": tags,
+            "reading_time": reading_time
         }
         return render(request, "blog-details.html", context)
 
@@ -293,7 +298,7 @@ class NewsletterView(View):
         except ValidationError:
             return JsonResponse({'error': 'Invalid email address'})
 
-        except Exception as e:
+        except ValueError as e:
             print(f"Unhandled error: {e}")
             return JsonResponse({
                 'error': 'An error occurred while processing your request. Please try again later.'
