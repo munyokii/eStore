@@ -16,3 +16,11 @@ def custom_login_required(message="You must be logged in to view this page. Plea
             return view_func(request, *args, **kwargs)
         return _wrapped_view
     return decorator
+
+def calculate_reading_time(text, wpm=200):
+    """Estimating reading time based on 200 words per minute."""
+    if not text:
+        return "1 min read"
+    words = len(text.split())
+    minutes = max(1, round(words / wpm))
+    return f"{minutes} min read"
