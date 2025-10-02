@@ -10,6 +10,7 @@ urlpatterns = [
   path("checkout/", views.CheckoutView.as_view(), name="checkout"),
   path("blog/", views.BlogView.as_view(), name="blog"),
   path("blog/details/<int:post_id>/", views.BlogDetailView.as_view(), name="blog_detail"),
+  path("search/", views.BlogSearchView.as_view(), name="blog-search"),
   path("category/", views.CategoryView.as_view(), name="category"),
   path("about/", views.AboutView.as_view(), name="about"),
   path("macrotech/contact-us/", views.ContactView.as_view(), name="contact"),
