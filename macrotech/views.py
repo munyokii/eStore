@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.utils.decorators import method_decorator
-from django.db.models import Avg, Count
+from django.db.models import Avg, Count, Q
 
 from macrotech.forms import ContactMessageForm, ReviewForm
 
@@ -209,6 +209,40 @@ class BlogDetailView(View):
         }
         return render(request, "blog-details.html", context)
 
+class BlogSearchView(View):
+    """AJAX fuzzy search for blog posts."""
+    def get(self, request):
+        """Handle GET request for searching blog posts."""
+        query = request.GET.get('q', '').strip()
+        if query:
+            posts = BlogPost.objects.filter(
+                Q(post_title__icontains=query) |
+                Q(post_category__icontains=query) |
+                Q(post_content__icontains=query) |
+                Q(post_description__icontains=query) |
+                Q(post_tags__icontains=query) |
+                Q(post_headline__icontains=query)
+            )[:5]
+        else:
+            posts = []
+
+        results = [
+            {
+                'id': post.id,
+                'title': post.post_title,
+                'url': f'/blog/details/{post.id}/'
+            }
+            for post in posts
+        ]
+
+        if not results:
+            return JsonResponse({
+                'results': [],
+                'message': 'No results found'
+            })
+        return JsonResponse({
+            'results': results
+        })
 
 class AboutView(View):
     """Class-based view to display the about.html template."""
