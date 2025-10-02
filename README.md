@@ -1,5 +1,5 @@
 # eStore
-An online e-commerce shop for selling computers developed with Python(Django), Javascript, CSS. A user can shop for products and securely purchase them.
+An online e-commerce shop for selling computers developed with Python(Django), Javascript(AJAX), CSS. A user can shop for products and securely purchase them.
 
 ## Features
 
