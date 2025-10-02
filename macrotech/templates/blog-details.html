@@ -399,11 +399,10 @@
             <div class="search-widget widget-item">
 
               <h3 class="widget-title">Search</h3>
-              <form action="">
-                <input type="text">
-                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+              <form action="javascript:void(0)" id="search-form">
+                <input type="text" id="search-input">
               </form>
-
+              <ul id="search-results" class="search-results"></ul>
             </div><!--/Search Widget -->
 
             <!-- Categories Widget -->
@@ -454,6 +453,41 @@
       </div>
     </div>
 
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const input = document.getElementById('search-input');
+        const resultsBox = document.getElementById('search-results');
+
+        if (!input || !resultsBox) return;
+        
+        input.addEventListener('keyup', function() {
+          let query = input.value.trim();
+
+          if (query.length === 0) {
+            resultsBox.innerHTML = '';
+            resultsBox.style.display = 'none';
+            return;
+          }
+
+          fetch(`/search/?q=${query}`)
+            .then(response => response.json())
+            .then(data => {
+              resultsBox.innerHTML = '';
+
+              if (data.results.length > 0) {
+                data.results.forEach(item => {
+                  resultsBox.style.display = 'block';
+
+                  resultsBox.innerHTML += `<li><a href='${item.url}'>${item.title}</a></li>`;
+                });
+              } else {
+                resultsBox.style.display = 'block';
+                resultsBox.innerHTML = `<li>${data.message}</li>`;
+              }
+            });
+        });
+      });
+    </script>
 </body>
 
 </html>
