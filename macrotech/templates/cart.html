@@ -7,9 +7,12 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Cart - eStore Bootstrap Template</title>
+  <title>Product Cart</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
+
+  <!-- Toastr CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 </head>
 
@@ -45,9 +48,6 @@
                   </div>
                   <div class="col-lg-2 text-center">
                     <h5>Quantity</h5>
-                  </div>
-                  <div class="col-lg-2 text-center">
-                    <h5>Total</h5>
                   </div>
                 </div>
               </div>
@@ -231,8 +231,42 @@
             });
           });
         });
+
+        // Removing a single item
+        document.querySelectorAll(".remove-item").forEach(btn => {
+          btn.addEventListener("click", function() {
+            const productId = this.dataset.id;
+
+            fetch("/cart/remove/", {
+              method: "POST",
+              headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              body: new URLSearchParams({ product_id: productId })
+            })
+            .then(res => res.json())
+            .then(data => {
+              if (data.success) {
+                toastr.success(data.message);
+                this.closest(".cart-item").remove();
+                document.getElementById("cart-total").innerText = "Ksh" + data.total_price;
+                document.getElementById("cart-count").innerText = data.cart_count;
+
+                if (data.cart_count === 0) {
+                  document.querySelector(".cart-items").innerHTML = "<span>Your cart is empty</span>";
+                }
+              } else {
+                toastr.error("Failed to remove item");
+              }
+            });
+          });
+        });
       });
     </script>
+
+  <!-- Toastr JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
 
 </html>

@@ -229,6 +229,28 @@ class UpdateCartView(View):
         })
 
 
+@method_decorator(csrf_exempt, name='dispatch')
+class RemoveFromCartView(View):
+    """Removing a product from cart"""
+    def post(self, request):
+        """Post method"""
+        product_id = request.POST.get('product_id')
+
+        cart = request.session.get('cart', {})
+        if product_id in cart:
+            del cart[product_id]
+            request.session['cart'] = cart
+        
+        products = Product.objects.filter(id__in=cart.keys())
+        total_price = sum(p.current_price * cart[str(p.id)] for p in products)
+
+        return JsonResponse({
+            "success": True,
+            "message": "Item removed from cart",
+            "cart_count": sum(cart.values()),
+            "total_price": total_price
+        })
+
 class CheckoutView(View):
     """Class-based view to display the checkout.html template."""
 
