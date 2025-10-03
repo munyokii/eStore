@@ -204,7 +204,7 @@
             <!-- Cart -->
             <a href="{% url 'cart' %}" class="header-action-btn">
               <i class="bi bi-cart3"></i>
-              <span class="badge">3</span>
+              <span id="cart-count" class="badge">{{ cart_count }}</span>
             </a>
 
             <!-- Mobile Navigation Toggle -->
@@ -225,7 +225,6 @@
                 <li><a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a></li>
               <li><a href="{% url 'category' %}" class="{% if request.resolver_match.url_name == 'category' %}active{% endif %}">Category</a></li>
               {% if user.is_authenticated %}
-                <li><a href="{% url 'cart' %}" class="{% if request.resolver_match.url_name == 'cart' %}active{% endif %}">Cart</a></li>
                 <li><a href="{% url 'checkout' %}" class="{% if request.resolver_match.url_name == 'checkout' %}active{% endif %}">Checkout</a></li>
               {% endif %}
               <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
@@ -766,6 +765,7 @@
   <!-- Main JS File -->
   <script src="{% static 'assets/js/main.js' %}"></script>
   <script src="{% static 'assets/js/newsletter.js' %}"></script>
+  <script src="{% static 'assets/js/addtocart.js' %}" ></script>
 
 </body>
 

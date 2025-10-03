@@ -53,137 +53,55 @@
               </div>
 
               <!-- Cart Item 1 -->
-              <div class="cart-item" data-aos="fade-up" data-aos-delay="100">
-                <div class="row align-items-center gy-4">
-                  <div class="col-lg-6 col-12 mb-3 mb-lg-0">
-                    <div class="product-info d-flex align-items-center">
-                      <div class="product-image">
-                        <img src="{% static 'assets/img/product/product-2.webp' %}" alt="Product" class="img-fluid" loading="lazy">
-                      </div>
-                      <div class="product-details">
-                        <h6 class="product-title">Lorem ipsum dolor sit amet</h6>
-                        <div class="product-meta">
-                          <span class="product-color">Color: Black</span>
-                          <span class="product-size">Size: M</span>
+              {% if cart_items %}
+                {% for item in cart_items %}
+                  <div class="cart-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="row align-items-center gy-4">
+                      <div class="col-lg-6 col-12 mb-3 mb-lg-0">
+                        <div class="product-info d-flex align-items-center">
+                          <div class="product-image">
+                            <img src="{{ item.image }}" alt="{{ item.name }}" class="img-fluid" loading="lazy">
+                          </div>
+                          <div class="product-details">
+                            <h6 class="product-title">{{ item.name }}</h6>
+                            <div class="product-meta">
+                              <!-- <span class="product-color">Color: Black</span>
+                              <span class="product-size">Quantity: {{ item.qty }}</span> -->
+                            </div>
+                            <button class="remove-item" data-id="{{ item.id }}" type="button">
+                              <i class="bi bi-trash"></i> Remove
+                            </button>
+                          </div>
                         </div>
-                        <button class="remove-item" type="button">
-                          <i class="bi bi-trash"></i> Remove
-                        </button>
+                      </div>
+                      <div class="col-12 col-lg-2 text-center">
+                        <div class="price-tag">
+                          <span class="current-price">Ksh{{ item.price }}</span>
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-2 text-center">
+                        <div class="quantity-selector" data-product-id="{{ item.id }}">
+                          <button class="quantity-btn decrease">
+                            <i class="bi bi-dash"></i>
+                          </button>
+                          <input type="number" class="quantity-input" value="{{ item.qty }}" min="1" max="10">
+                          <button class="quantity-btn increase">
+                            <i class="bi bi-plus"></i>
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-12 col-lg-2 text-center">
-                    <div class="price-tag">
-                      <span class="current-price">$89.99</span>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-2 text-center">
-                    <div class="quantity-selector">
-                      <button class="quantity-btn decrease">
-                        <i class="bi bi-dash"></i>
-                      </button>
-                      <input type="number" class="quantity-input" value="1" min="1" max="10">
-                      <button class="quantity-btn increase">
-                        <i class="bi bi-plus"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-2 text-center mt-3 mt-lg-0">
-                    <div class="item-total">
-                      <span>$89.99</span>
-                    </div>
+                  </div><!-- End Cart Item -->
+                {% endfor %}
+              {% else %}
+                <div class="cart-item" data-aos="fade-up" data-aos-delay="100">
+                  <div class="row align-items-center gy-4">
+                    <p>Your cart is empty</p>
                   </div>
                 </div>
-              </div><!-- End Cart Item -->
+              {% endif %}
 
-              <!-- Cart Item 2 -->
-              <div class="cart-item" data-aos="fade-up" data-aos-delay="200">
-                <div class="row align-items-center gy-4">
-                  <div class="col-lg-6 col-12 mb-3 mb-lg-0">
-                    <div class="product-info d-flex align-items-center">
-                      <div class="product-image">
-                        <img src="{% static 'assets/img/product/product-7.webp' %}" alt="Product" class="img-fluid" loading="lazy">
-                      </div>
-                      <div class="product-details">
-                        <h6 class="product-title">Consectetur adipiscing elit</h6>
-                        <div class="product-meta">
-                          <span class="product-color">Color: White</span>
-                          <span class="product-size">Size: L</span>
-                        </div>
-                        <button class="remove-item" type="button">
-                          <i class="bi bi-trash"></i> Remove
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-2 text-center">
-                    <div class="price-tag">
-                      <span class="current-price">$64.99</span>
-                      <span class="original-price">$79.99</span>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-2 text-center">
-                    <div class="quantity-selector">
-                      <button class="quantity-btn decrease">
-                        <i class="bi bi-dash"></i>
-                      </button>
-                      <input type="number" class="quantity-input" value="2" min="1" max="10">
-                      <button class="quantity-btn increase">
-                        <i class="bi bi-plus"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-2 text-center mt-3 mt-lg-0">
-                    <div class="item-total">
-                      <span>$129.98</span>
-                    </div>
-                  </div>
-                </div>
-              </div><!-- End Cart Item -->
-
-              <!-- Cart Item 3 -->
-              <div class="cart-item" data-aos="fade-up" data-aos-delay="300">
-                <div class="row align-items-center gy-4">
-                  <div class="col-lg-6 col-12 mb-3 mb-lg-0">
-                    <div class="product-info d-flex align-items-center">
-                      <div class="product-image">
-                        <img src="{% static 'assets/img/product/product-10.webp' %}" alt="Product" class="img-fluid" loading="lazy">
-                      </div>
-                      <div class="product-details">
-                        <h6 class="product-title">Sed do eiusmod tempor</h6>
-                        <div class="product-meta">
-                          <span class="product-color">Color: Blue</span>
-                          <span class="product-size">Size: S</span>
-                        </div>
-                        <button class="remove-item" type="button">
-                          <i class="bi bi-trash"></i> Remove
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-2 text-center">
-                    <div class="price-tag">
-                      <span class="current-price">$49.99</span>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-2 text-center">
-                    <div class="quantity-selector">
-                      <button class="quantity-btn decrease">
-                        <i class="bi bi-dash"></i>
-                      </button>
-                      <input type="number" class="quantity-input" value="1" min="1" max="10">
-                      <button class="quantity-btn increase">
-                        <i class="bi bi-plus"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-2 text-center mt-3 mt-lg-0">
-                    <div class="item-total">
-                      <span>$49.99</span>
-                    </div>
-                  </div>
-                </div>
-              </div><!-- End Cart Item -->
+              
 
               <div class="cart-actions">
                 <div class="row g-3">
@@ -214,7 +132,7 @@
 
               <div class="summary-item">
                 <span class="summary-label">Subtotal</span>
-                <span class="summary-value">$269.96</span>
+                <span class="summary-value" id="cart-total">Ksh{{ total_price }}</span>
               </div>
 
               <div class="summary-item shipping-item">
@@ -223,19 +141,19 @@
                   <div class="form-check">
                     <input class="form-check-input" type="radio" name="shipping" id="standard" checked="">
                     <label class="form-check-label" for="standard">
-                      Standard Delivery - $4.99
+                      Standard Delivery - Ksh4.99
                     </label>
                   </div>
                   <div class="form-check">
                     <input class="form-check-input" type="radio" name="shipping" id="express">
                     <label class="form-check-label" for="express">
-                      Express Delivery - $12.99
+                      Express Delivery - Ksh12.99
                     </label>
                   </div>
                   <div class="form-check">
                     <input class="form-check-input" type="radio" name="shipping" id="free">
                     <label class="form-check-label" for="free">
-                      Free Shipping (Orders over $300)
+                      Free Shipping (Orders over Ksh300)
                     </label>
                   </div>
                 </div>
@@ -243,17 +161,17 @@
 
               <div class="summary-item">
                 <span class="summary-label">Tax</span>
-                <span class="summary-value">$27.00</span>
+                <span class="summary-value">Ksh27.00</span>
               </div>
 
               <div class="summary-item discount">
                 <span class="summary-label">Discount</span>
-                <span class="summary-value">-$0.00</span>
+                <span class="summary-value">-Ksh0.00</span>
               </div>
 
               <div class="summary-total">
                 <span class="summary-label">Total</span>
-                <span class="summary-value">$301.95</span>
+                <span class="summary-value" id="cart-total">Ksh{{ total_price }}</span>
               </div>
 
               <div class="checkout-button">
@@ -286,6 +204,35 @@
 
     </section><!-- /Cart Section -->
 
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll('.quantity-btn').forEach(button => {
+          button.addEventListener('click', function() {
+            const parent = this.closest('.quantity-selector');
+            const input = parent.querySelector('.quantity-input');
+            const productId = parent.dataset.productId;
+            const action = this.classList.contains('increase') ? 'increase' : 'decrease';
+
+            fetch('/update-cart/', {
+              method: 'POST',
+              headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              body: new URLSearchParams({
+                product_id: productId,
+                action: action
+              })
+            })
+            .then(response => response.json())
+            .then(data => {
+              input.value = data.qty;
+              document.getElementById('cart-total').innerText ="Ksh" + data.total_price;
+            });
+          });
+        });
+      });
+    </script>
 </body>
 
 </html>

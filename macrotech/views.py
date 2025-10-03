@@ -2,6 +2,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
@@ -126,7 +127,106 @@ class CartView(View):
 
     def get(self, request):
         """Handle GET requests and render the cart template."""
-        return render(request, "cart.html")
+        cart = request.session.get('cart', {})
+        product_ids = cart.keys()
+
+        products = Product.objects.filter(id__in=product_ids)
+
+        cart_items = []
+        total_price = 0
+
+        for product in products:
+            qty = cart[str(product.id)]
+            subtotal = product.current_price * qty
+            total_price += subtotal
+            cart_items.append({
+                'id': product.id,
+                'name': product.product_name,
+                'price': product.current_price,
+                'image': product.product_image.url if product.product_image else None,
+                'qty': qty,
+                'subtotal': subtotal
+            })
+
+        context = {
+            'cart_items': cart_items,
+            'total_price': total_price
+        }
+        return render(request, "cart.html", context)
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class AddToCartView(View):
+    """Adding a product to cart"""
+    def post(self, request):
+        """Post method"""
+        product_id = request.POST.get("product_id")
+        if not product_id:
+            return JsonResponse({
+                'success': False,
+                'message': 'No product id provided'
+            })
+
+        try:
+            product = Product.objects.get(id=product_id)
+        except Product.DoesNotExist:
+            return JsonResponse({
+                'success': False,
+                'message': 'Product not found'
+            })
+
+        # Getting cart form session
+        cart = request.session.get('cart', {})
+
+        # Incrementing quantity if already exists
+        if str(product_id) in cart:
+            return JsonResponse({
+                'success': False,
+                'message': f'{product.product_name} is already in your cart!',
+                'cart_count': sum(cart.values())
+            })
+
+        cart[str(product_id)] = 1
+        request.session['cart'] = cart
+        cart_count = sum(cart.values())
+
+        return JsonResponse({
+            'success': True,
+            'message': f'{product.product_name} added to cart!',
+            'cart_count': cart_count
+        })
+
+
+class UpdateCartView(View):
+    """Updating cart quantity via AJAX"""
+    def post(self, request):
+        """Post request method"""
+        product_id = request.POST.get('product_id')
+        action = request.POST.get('action')
+
+        cart = request.session.get('cart', {})
+
+        if product_id in cart:
+            if action == 'increase':
+                cart[product_id] += 1
+            elif action == 'decrease' and cart[product_id] > 1:
+                cart[product_id] -= 1
+
+        request.session['cart'] = cart
+
+        products = Product.objects.filter(id__in=cart.keys())
+        total_price = 0
+
+        for product in products:
+            qty = cart[str(product.id)]
+            subtotal = product.current_price * qty
+            total_price += subtotal
+
+
+        return JsonResponse({
+            'qty': cart[product_id],
+            'total_price': total_price
+        })
 
 
 class CheckoutView(View):
