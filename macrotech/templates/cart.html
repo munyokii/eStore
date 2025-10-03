@@ -114,7 +114,7 @@
                     </div>
                   </div>
                   <div class="col-lg-6 col-md-6 text-md-end">
-                    <button class="btn btn-outline-accent me-2">
+                    <button class="btn btn-outline-accent me-2" onclick="location.reload()">
                       <i class="bi bi-arrow-clockwise"></i> Update
                     </button>
                     <button class="btn btn-outline-danger">
@@ -260,6 +260,26 @@
                 toastr.error("Failed to remove item");
               }
             });
+          });
+        });
+
+        // Clear entire cart
+        document.querySelector(".btn-outline-danger").addEventListener("click", function() {
+          fetch("/cart/clear/", {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": "{{ csrf_token }}",
+              "Content-Type": "application/x-www-form-urlencoded"
+            }
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              toastr.success(data.message);
+              document.querySelector(".cart-items").innerHTML = "<p>Your cart is empty</p>";
+              document.getElementById("cart-total").innerText = "Ksh0";
+              document.getElementById("cart-count").innerText = "0";
+            }
           });
         });
       });

@@ -240,7 +240,7 @@ class RemoveFromCartView(View):
         if product_id in cart:
             del cart[product_id]
             request.session['cart'] = cart
-        
+
         products = Product.objects.filter(id__in=cart.keys())
         total_price = sum(p.current_price * cart[str(p.id)] for p in products)
 
@@ -249,6 +249,21 @@ class RemoveFromCartView(View):
             "message": "Item removed from cart",
             "cart_count": sum(cart.values()),
             "total_price": total_price
+        })
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class ClearCartView(View):
+    """Clearing all items from cart"""
+    def post(self, request):
+        """Post Method"""
+        request.session['cart'] = {}
+        
+        return JsonResponse({
+            "success": True,
+            "message": "Cart cleared",
+            "cart_count": 0,
+            "total_price": 0
         })
 
 class CheckoutView(View):
