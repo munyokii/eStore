@@ -11,6 +11,9 @@
   <meta name="description" content="">
   <meta name="keywords" content="">
 
+  <!-- Toastr CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
 </head>
 
 <body class="index-page">
@@ -105,7 +108,7 @@
                 <i class="bi bi-truck"></i>
               </div>
               <h3>Free Shipping</h3>
-              <p>Nulla sit morbi vestibulum eros duis amet, consectetur vitae lacus. Ut quis tempor felis sed nunc viverra.</p>
+              <p>Free delivery for orders within CBD.</p>
             </div>
           </div><!-- End Info Card 1 -->
 
@@ -116,7 +119,7 @@
                 <i class="bi bi-piggy-bank"></i>
               </div>
               <h3>Money Back Guarantee</h3>
-              <p>Nullam gravida felis ac nunc tincidunt, sed malesuada justo pulvinar. Vestibulum nec diam vitae eros.</p>
+              <p>Get your money back in cases of canceled orders.</p>
             </div>
           </div><!-- End Info Card 2 -->
 
@@ -127,7 +130,7 @@
                 <i class="bi bi-percent"></i>
               </div>
               <h3>Discount Offers</h3>
-              <p>Nulla ipsum nisi vel adipiscing amet, dignissim consectetur ornare. Vestibulum quis posuere elit auctor.</p>
+              <p>Upto 100% discount offers.</p>
             </div>
           </div><!-- End Info Card 3 -->
 
@@ -138,7 +141,7 @@
                 <i class="bi bi-headset"></i>
               </div>
               <h3>24/7 Support</h3>
-              <p>Ipsum dolor amet sit consectetur adipiscing, nullam vitae euismod tempor nunc felis vestibulum ornare.</p>
+              <p>24/7 customer support for smooth shopping.</p>
             </div>
           </div><!-- End Info Card 4 -->
         </div>
@@ -225,7 +228,7 @@
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Best Sellers</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+        <p>Our best selling products just for you.</p>
       </div><!-- End Section Title -->
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -266,7 +269,7 @@
                     <i class="bi bi-star-half"></i>
                     <span class="rating-count">(42)</span>
                   </div>
-                  <button class="btn btn-add-to-cart">
+                  <button class="btn btn-add-to-cart add-to-cart" data-product="{{ best_seller.id }}">
                     <i class="bi bi-bag-plus me-2"></i>Add to Cart
                   </button>
                 </div>
@@ -291,9 +294,10 @@
             <div class="product-filters isotope-filters mb-5 d-flex justify-content-center" data-aos="fade-up">
               <ul class="d-flex flex-wrap gap-2 list-unstyled">
                 <li class="filter-active" data-filter="*">All</li>
-                <li data-filter=".filter-clothing">Clothing</li>
+                <li data-filter=".filter-clothing">Laptops</li>
                 <li data-filter=".filter-accessories">Accessories</li>
-                <li data-filter=".filter-electronics">Electronics</li>
+                <li data-filter=".filter-electronics">Desktops</li>
+                <li data-filter=".filter-electronics">Smartphones</li>
               </ul>
             </div>
           </div>
@@ -310,7 +314,7 @@
                   <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" class="img-fluid main-img">
                   <img src="{{ product.product_more_image.url }}" alt="{{ product.product_name }}" class="img-fluid hover-img">
                   <div class="product-overlay">
-                    <a href="{% url 'cart' %}" class="btn-cart"><i class="bi bi-cart-plus"></i> Add to Cart</a>
+                    <a href="javascript:void(0)" class="btn-cart add-to-cart" data-product="{{ product.id }}"><i class="bi bi-cart-plus"></i> Add to Cart</a>
                     <div class="product-actions">
                       <a href="#" class="action-btn"><i class="bi bi-heart"></i></a>
                       <a href="#" class="action-btn"><i class="bi bi-eye"></i></a>
@@ -348,6 +352,11 @@
 
     </section><!-- /Product List Section -->
 
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Toastr JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <script src="{% static 'assets/js/addtocart.js' %}" ></script>
 </body>
 
 </html>

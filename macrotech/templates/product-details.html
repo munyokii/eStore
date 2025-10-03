@@ -93,15 +93,6 @@
                     <div class="swiper-slide thumbnail-item" data-image="{{ product.product_more_image.url }}">
                       <img src="{{ product.product_more_image.url }}" alt="Product Thumbnail" class="img-fluid">
                     </div>
-                    <div class="swiper-slide thumbnail-item" data-image="{% static 'assets/img/product/product-details-3.webp' %}">
-                      <img src="{% static 'assets/img/product/product-details-3.webp' %}" alt="Product Thumbnail" class="img-fluid">
-                    </div>
-                    <div class="swiper-slide thumbnail-item" data-image="{% static 'assets/img/product/product-details-4.webp' %}">
-                      <img src="{% static 'assets/img/product/product-details-4.webp' %}" alt="Product Thumbnail" class="img-fluid">
-                    </div>
-                    <div class="swiper-slide thumbnail-item" data-image="{% static 'assets/img/product/product-details-5.webp' %}">
-                      <img src="{% static 'assets/img/product/product-details-5.webp' %}" alt="Product Thumbnail" class="img-fluid">
-                    </div>
                   </div>
                   <div class="swiper-button-next"></div>
                   <div class="swiper-button-prev"></div>
@@ -158,7 +149,7 @@
               <!-- Quantity Selector -->
               <div class="product-quantity mb-4">
                 <h6 class="option-title">Quantity:</h6>
-                <div class="quantity-selector">
+                <div class="quantity-selector" data-product-id="">
                   <button class="quantity-btn decrease">
                     <i class="bi bi-dash"></i>
                   </button>
@@ -171,7 +162,7 @@
 
               <!-- Action Buttons -->
               <div class="product-actions">
-                <button class="btn btn-primary add-to-cart-btn">
+                <button class="btn btn-primary add-to-cart-btn add-to-cart" data-product="{{ product.id }}">
                   <i class="bi bi-cart-plus"></i> Add to Cart
                 </button>
                 <button class="btn btn-outline-primary buy-now-btn">
@@ -409,6 +400,7 @@
         </div>
       </div>
     </section><!-- /Product Details Section -->
+  
 
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -417,6 +409,7 @@
 
   <!-- Main JS File -->
   <script src="{% static 'assets/js/review.js' %}"></script>
+  <script src="{% static 'assets/js/addtocart.js' %}" ></script>
 
 </body>
 
